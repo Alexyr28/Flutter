@@ -7,7 +7,7 @@ class HomeFixMec extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Home FixMec")),
-      body: const Center(child: Text("Bienvenido a FixMec")),
+      body: SafeArea(child: const Center(child: Text("Bienvenido a FixMec"))),
     );
   }
 }
