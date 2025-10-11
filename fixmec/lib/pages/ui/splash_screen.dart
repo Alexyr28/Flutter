@@ -3,7 +3,6 @@ import "package:auto_size_text/auto_size_text.dart";
 import "package:fixmec/pages/ui/home.dart";
 import "package:flutter/material.dart";
 import "package:lottie/lottie.dart";
-import "package:page_transition/page_transition.dart";
 
 class SplashScreenFixMec extends StatelessWidget {
   const SplashScreenFixMec({super.key});
@@ -19,8 +18,8 @@ class SplashScreenFixMec extends StatelessWidget {
         height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomLeft,
             colors: [Color(0XFF004E92), Color(0XFF00B4DB)],
           ),
         ),
@@ -70,10 +69,9 @@ class SplashScreenFixMec extends StatelessWidget {
           ),
         ),
       ),
+      duration: 3000,
       nextScreen: HomeFixMec(),
       splashTransition: SplashTransition.fadeTransition,
-      pageTransitionType: PageTransitionType.fade,
-      duration: 3500,
     );
   }
 }
