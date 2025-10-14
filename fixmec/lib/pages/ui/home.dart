@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class HomeFixMec extends StatelessWidget {
-  const HomeFixMec({super.key});
+  final bool isDark;
+  final ValueChanged<bool> onThemeChanged;
+  const HomeFixMec({
+    super.key,
+    required this.isDark,
+    required this.onThemeChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +82,13 @@ class HomeFixMec extends StatelessWidget {
                 ),
                 onTap: () => {
                   Navigator.pop(context),
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SettingsFixMec(),
+                      builder: (context) => SettingsFixMec(
+                        isDark: isDark,
+                        onThemeChanged: onThemeChanged,
+                      ),
                     ),
                   ),
                 },

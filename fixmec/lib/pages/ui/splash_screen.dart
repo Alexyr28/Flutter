@@ -5,7 +5,14 @@ import "package:flutter/material.dart";
 import "package:lottie/lottie.dart";
 
 class SplashScreenFixMec extends StatelessWidget {
-  const SplashScreenFixMec({super.key});
+  final bool isDark;
+  final ValueChanged<bool> onThemeChanged;
+
+  const SplashScreenFixMec({
+    super.key,
+    required this.isDark,
+    required this.onThemeChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +77,7 @@ class SplashScreenFixMec extends StatelessWidget {
         ),
       ),
       duration: 3000,
-      nextScreen: HomeFixMec(),
+      nextScreen: HomeFixMec(isDark: isDark, onThemeChanged: onThemeChanged),
       splashTransition: SplashTransition.fadeTransition,
     );
   }

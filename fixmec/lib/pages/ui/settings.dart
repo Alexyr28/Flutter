@@ -2,7 +2,13 @@ import "package:fixmec/pages/ui/home.dart";
 import "package:flutter/material.dart";
 
 class SettingsFixMec extends StatefulWidget {
-  const SettingsFixMec({super.key});
+  final bool isDark;
+  final ValueChanged<bool> onThemeChanged;
+  const SettingsFixMec({
+    super.key,
+    required this.isDark,
+    required this.onThemeChanged,
+  });
 
   @override
   State<SettingsFixMec> createState() => _SettingsFixMec();
@@ -13,180 +19,194 @@ class _SettingsFixMec extends State<SettingsFixMec> {
   bool _isnoti = false;
 
   @override
+  void initState() {
+    super.initState();
+    _isDark = widget.isDark;
+  }
+
+  @override
+  void didUpdateWidget(covariant SettingsFixMec oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isDark != widget.isDark) {
+      setState(() {
+        _isDark = widget.isDark;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: _isDark ? ThemeData.dark() : ThemeData.light(),
-      child: Scaffold(
-        endDrawer: Drawer(
-          child: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 35,
-                        backgroundColor: const Color.fromARGB(
-                          255,
-                          65,
-                          156,
-                          221,
-                        ),
-                        child: Image.asset(
-                          "assets/icons/repair.png",
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      Text(
-                        "FixMec",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "Diagnóstico Inteligente",
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.home_rounded, color: Colors.white),
-                  title: const Text(
-                    "Inicio",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () => {
-                    Navigator.pop(context),
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeFixMec()),
-                    ),
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.settings_suggest_outlined,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    "Configuración",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () => {},
-                ),
-                ListTile(
-                  leading: const Icon(Icons.info_outlined, color: Colors.white),
-                  title: const Text(
-                    "Acerca de",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () => {},
-                ),
-              ],
+    return Scaffold(
+      endDrawer: Drawer(
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
           ),
-        ),
-        appBar: AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Image.asset("assets/icons/repair.png", fit: BoxFit.contain),
-          ),
-          title: const Text(
-            "Configuración",
-            style: TextStyle(
-              fontFamily: "MiFuente",
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          centerTitle: true,
-          actions: [
-            Builder(
-              builder: (context) {
-                return IconButton(
-                  onPressed: () {
-                    Scaffold.of(context).openEndDrawer();
-                  },
-                  icon: const Icon(
-                    Icons.menu_rounded,
-                    color: Colors.white,
-                    size: 40,
-                  ),
-                );
-              },
-            ),
-          ],
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomLeft,
-                colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
-              ),
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-        ),
-        body: Center(
           child: ListView(
+            padding: EdgeInsets.zero,
             children: [
-              _SingleSection(
-                title: "General",
-                children: [
-                  _CustomListTile(
-                    title: "Modo Oscuro",
-                    icon: Icons.dark_mode_outlined,
-                    trailing: Switch(
-                      value: _isDark,
-                      onChanged: (value) {
-                        setState(() {
-                          _isDark = value;
-                        });
-                      },
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 35,
+                      backgroundColor: const Color.fromARGB(255, 65, 156, 221),
+                      child: Image.asset(
+                        "assets/icons/repair.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    Text(
+                      "FixMec",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "Diagnóstico Inteligente",
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.home_rounded, color: Colors.white),
+                title: const Text(
+                  "Inicio",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () => {
+                  Navigator.pop(context),
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeFixMec(
+                        isDark: _isDark,
+                        onThemeChanged: widget.onThemeChanged,
+                      ),
                     ),
                   ),
-                  const _CustomListTile(
-                    title: "Idioma",
-                    icon: Icons.language_rounded,
-                  ),
-                  _CustomListTile(
-                    title: "Notificaciones",
-                    icon: Icons.notifications_active,
-                    trailing: Switch(
-                      value: _isnoti,
-                      onChanged: (value) {
-                        setState(() {
-                          _isnoti = value;
-                        });
-                      },
-                    ),
-                  ),
-                ],
+                },
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.settings_suggest_outlined,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  "Configuración",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () => {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.info_outlined, color: Colors.white),
+                title: const Text(
+                  "Acerca de",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () => {},
               ),
             ],
           ),
+        ),
+      ),
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Image.asset("assets/icons/repair.png", fit: BoxFit.contain),
+        ),
+        title: const Text(
+          "Configuración",
+          style: TextStyle(
+            fontFamily: "MiFuente",
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          Builder(
+            builder: (context) {
+              return IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+                icon: const Icon(
+                  Icons.menu_rounded,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              );
+            },
+          ),
+        ],
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomLeft,
+              colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
+            ),
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+      ),
+      body: Center(
+        child: ListView(
+          children: [
+            _SingleSection(
+              title: "General",
+              children: [
+                _CustomListTile(
+                  title: "Modo Oscuro",
+                  icon: Icons.dark_mode_outlined,
+                  trailing: Switch(
+                    value: _isDark,
+                    onChanged: (value) {
+                      widget.onThemeChanged(value);
+                      setState(() {
+                        _isDark = value;
+                      });
+                    },
+                  ),
+                ),
+                const _CustomListTile(
+                  title: "Idioma",
+                  icon: Icons.language_rounded,
+                ),
+                _CustomListTile(
+                  title: "Notificaciones",
+                  icon: Icons.notifications_active,
+                  trailing: Switch(
+                    value: _isnoti,
+                    onChanged: (value) {
+                      setState(() {
+                        _isnoti = value;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
