@@ -7,6 +7,87 @@ class HomeFixMec extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: Drawer(
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 35,
+                      backgroundColor: const Color.fromARGB(255, 65, 156, 221),
+                      child: Image.asset(
+                        "assets/icons/repair.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "FixMec",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "Diagnóstico Inteligente",
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.home_rounded, color: Colors.white),
+                title: const Text(
+                  "Inicio",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () => Navigator.pop(context),
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.settings_suggest_outlined,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  "Configuración",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () => {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.info_outlined, color: Colors.white),
+                title: const Text(
+                  "Acerca de",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () => {},
+              ),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(5.0),
@@ -21,6 +102,22 @@ class HomeFixMec extends StatelessWidget {
           ),
         ),
         centerTitle: true,
+        actions: [
+          Builder(
+            builder: (context) {
+              return IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+                icon: const Icon(
+                  Icons.menu_rounded,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              );
+            },
+          ),
+        ],
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -40,7 +137,10 @@ class HomeFixMec extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFF4E2D8), Color(0xFFECE9E6)],
+            colors: [
+              Color.fromARGB(255, 246, 242, 239),
+              Color.fromARGB(255, 212, 240, 243),
+            ],
           ),
         ),
 
@@ -48,7 +148,25 @@ class HomeFixMec extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-
+              Text(
+                "Bienvenido a FixMec",
+                style: TextStyle(
+                  fontFamily: "MiFuente",
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 12),
+              Text(
+                "Sistema inteligente de diagnóstico para motocicletas. "
+                "Usa IA para detectar y sugerir soluciones a fallas mecánicas comunes.",
+                style: TextStyle(
+                  fontFamily: "MiFuente",
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
               // carrusel
               CarouselSlider(
                 options: CarouselOptions(
@@ -82,7 +200,7 @@ class HomeFixMec extends StatelessWidget {
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.15),
+                              color: const Color(0xFF00B4DB),
                               blurRadius: 6,
                               offset: const Offset(0, 4),
                             ),
