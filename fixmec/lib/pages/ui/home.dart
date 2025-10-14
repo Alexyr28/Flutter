@@ -1,3 +1,4 @@
+import 'package:fixmec/pages/ui/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -37,7 +38,6 @@ class HomeFixMec extends StatelessWidget {
                         fit: BoxFit.contain,
                       ),
                     ),
-                    SizedBox(height: 10),
                     Text(
                       "FixMec",
                       style: TextStyle(
@@ -74,7 +74,15 @@ class HomeFixMec extends StatelessWidget {
                   "Configuración",
                   style: TextStyle(color: Colors.white),
                 ),
-                onTap: () => {},
+                onTap: () => {
+                  Navigator.pop(context),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsFixMec(),
+                    ),
+                  ),
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.info_outlined, color: Colors.white),
@@ -131,98 +139,84 @@ class HomeFixMec extends StatelessWidget {
       ),
 
       // cuerpo
-      body: Container(
-        // 🔹 Fondo con gradiente
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 246, 242, 239),
-              Color.fromARGB(255, 212, 240, 243),
-            ],
-          ),
-        ),
-
-        child: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              Text(
-                "Bienvenido a FixMec",
-                style: TextStyle(
-                  fontFamily: "MiFuente",
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            Text(
+              "Bienvenido a FixMec",
+              style: TextStyle(
+                fontFamily: "MiFuente",
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 12),
-              Text(
-                "Sistema inteligente de diagnóstico para motocicletas. "
-                "Usa IA para detectar y sugerir soluciones a fallas mecánicas comunes.",
-                style: TextStyle(
-                  fontFamily: "MiFuente",
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 12),
+            Text(
+              "Sistema inteligente de diagnóstico para motocicletas. "
+              "Usa IA para detectar y sugerir soluciones a fallas mecánicas comunes.",
+              style: TextStyle(
+                fontFamily: "MiFuente",
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
-              // carrusel
-              CarouselSlider(
-                options: CarouselOptions(
-                  height: 190.0,
-                  viewportFraction: 0.8,
-                  initialPage: 0,
-                  enableInfiniteScroll: true,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enlargeCenterPage: true,
-                  enlargeFactor: 0.25,
-                  scrollDirection: Axis.horizontal,
-                ),
+              textAlign: TextAlign.center,
+            ),
+            // carrusel
+            CarouselSlider(
+              options: CarouselOptions(
+                height: 190.0,
+                viewportFraction: 0.8,
+                initialPage: 0,
+                enableInfiniteScroll: true,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: true,
+                enlargeFactor: 0.25,
+                scrollDirection: Axis.horizontal,
+              ),
 
-                // img de las motos
-                items: ["assets/motos/apache.png", "assets/motos/evo.png"].map((
-                  imgPath,
-                ) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 5.0,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFF00B4DB),
-                              blurRadius: 6,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Image.asset(
-                              imgPath,
-                              fit: BoxFit.contain, //tamaño imag
-                            ),
+              // img de las motos
+              items: ["assets/motos/apache.png", "assets/motos/evo.png"].map((
+                imgPath,
+              ) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 5.0,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF00B4DB),
+                            blurRadius: 6,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Image.asset(
+                            imgPath,
+                            fit: BoxFit.contain, //tamaño imag
                           ),
                         ),
-                      );
-                    },
-                  );
-                }).toList(),
-              ),
-            ],
-          ),
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+          ],
         ),
       ),
     );
