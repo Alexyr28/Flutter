@@ -1,3 +1,4 @@
+import 'package:fixmec/pages/ui/acerca_de.dart';
 import 'package:fixmec/pages/ui/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -47,6 +48,7 @@ class HomeFixMec extends StatelessWidget {
                     Text(
                       "FixMec",
                       style: TextStyle(
+                        fontFamily: "MiFuente",
                         color: Colors.white,
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -55,6 +57,7 @@ class HomeFixMec extends StatelessWidget {
                     Text(
                       "Diagnóstico Inteligente",
                       style: TextStyle(
+                        fontFamily: "MiFuente",
                         color: Colors.white70,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -99,7 +102,18 @@ class HomeFixMec extends StatelessWidget {
                   "Acerca de",
                   style: TextStyle(color: Colors.white),
                 ),
-                onTap: () => {},
+                onTap: () => {
+                  Navigator.pop(context),
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AboutFixMec(
+                        isDark: isDark,
+                        onThemeChanged: onThemeChanged,
+                      ),
+                    ),
+                  ),
+                },
               ),
             ],
           ),

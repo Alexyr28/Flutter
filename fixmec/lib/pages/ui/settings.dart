@@ -1,3 +1,4 @@
+import "package:fixmec/pages/ui/acerca_de.dart";
 import "package:fixmec/pages/ui/home.dart";
 import "package:flutter/material.dart";
 
@@ -70,6 +71,7 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                     Text(
                       "FixMec",
                       style: TextStyle(
+                        fontFamily: "MiFuente",
                         color: Colors.white,
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -78,6 +80,7 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                     Text(
                       "Diagnóstico Inteligente",
                       style: TextStyle(
+                        fontFamily: "MiFuente",
                         color: Colors.white70,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -114,7 +117,7 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                   "Configuración",
                   style: TextStyle(color: Colors.white),
                 ),
-                onTap: () => {},
+                onTap: () => Navigator.pop(context),
               ),
               ListTile(
                 leading: const Icon(Icons.info_outlined, color: Colors.white),
@@ -122,7 +125,18 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                   "Acerca de",
                   style: TextStyle(color: Colors.white),
                 ),
-                onTap: () => {},
+                onTap: () => {
+                  Navigator.pop(context),
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AboutFixMec(
+                        isDark: _isDark,
+                        onThemeChanged: widget.onThemeChanged,
+                      ),
+                    ),
+                  ),
+                },
               ),
             ],
           ),
@@ -136,9 +150,9 @@ class _SettingsFixMec extends State<SettingsFixMec> {
         title: const Text(
           "Configuración",
           style: TextStyle(
-            fontFamily: "MiFuente",
             fontWeight: FontWeight.bold,
             color: Colors.white,
+            fontFamily: "MiFuente",
           ),
         ),
         centerTitle: true,
@@ -226,7 +240,10 @@ class _CustomListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(title),
+      title: Text(
+        title,
+        style: TextStyle(fontFamily: "MiFuente", fontWeight: FontWeight.bold),
+      ),
       leading: Icon(icon),
       trailing: trailing,
       onTap: () {},
