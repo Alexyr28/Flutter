@@ -32,4 +32,8 @@ const Map<String, String> es = {
   "dev3": "Pruebas, documentación y optimización",
   "version": "Version",
   "rights": "Todos los derechos reservados",
+  "chat": "Chat",
+  "diagnost": "Diagnóstico",
+  "fault": "Fallas",
+  "history": "Historial",
 };

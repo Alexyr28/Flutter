@@ -7,19 +7,92 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fixmec/pages/ui/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-class HomeFixMec extends StatelessWidget {
+class HomeFixMec extends StatefulWidget {
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
 
+  final int selectedIndex;
   const HomeFixMec({
     super.key,
     required this.isDark,
     required this.onThemeChanged,
+    this.selectedIndex = 0,
   });
 
   @override
+  State<HomeFixMec> createState() => _HomeFixMecState();
+}
+
+class _HomeFixMecState extends State<HomeFixMec> {
+  late int _currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.selectedIndex;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final items = [
+      SalomonBottomBarItem(
+        icon: Icon(Icons.home_rounded),
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("start"),
+          style: const TextStyle(
+            fontFamily: "MiFuente",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        selectedColor: const Color(0xFF00B4DB),
+      ),
+      SalomonBottomBarItem(
+        icon: const Icon(Icons.chat_outlined),
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("chat"),
+          style: const TextStyle(
+            fontFamily: "MiFuente",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        selectedColor: const Color(0xFF00B4DB),
+      ),
+      SalomonBottomBarItem(
+        icon: Icon(Icons.query_stats_outlined),
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("diagnost"),
+          style: const TextStyle(
+            fontFamily: "MiFuente",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        selectedColor: const Color(0xFF00B4DB),
+      ),
+      SalomonBottomBarItem(
+        icon: Icon(Icons.warning_amber_outlined),
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("fault"),
+          style: const TextStyle(
+            fontFamily: "MiFuente",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        selectedColor: const Color(0xFF00B4DB),
+      ),
+      SalomonBottomBarItem(
+        icon: Icon(Icons.history),
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("history"),
+          style: const TextStyle(
+            fontFamily: "MiFuente",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        selectedColor: const Color(0xFF00B4DB),
+      ),
+    ];
     return Scaffold(
       endDrawer: Drawer(
         child: Container(
@@ -101,8 +174,8 @@ class HomeFixMec extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => SettingsFixMec(
-                        isDark: isDark,
-                        onThemeChanged: onThemeChanged,
+                        isDark: widget.isDark,
+                        onThemeChanged: widget.onThemeChanged,
                       ),
                     ),
                   ),
@@ -120,8 +193,8 @@ class HomeFixMec extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => AboutFixMec(
-                        isDark: isDark,
-                        onThemeChanged: onThemeChanged,
+                        isDark: widget.isDark,
+                        onThemeChanged: widget.onThemeChanged,
                       ),
                     ),
                   ),
@@ -139,10 +212,10 @@ class HomeFixMec extends StatelessWidget {
                   final confirmLogout = await showDialog<bool>(
                     context: context,
                     builder: (BuildContext context) {
-                      final bgColor = isDark
+                      final bgColor = widget.isDark
                           ? const Color(0xFF1E1E1E)
                           : Colors.white;
-                      final textColor = isDark
+                      final textColor = widget.isDark
                           ? Colors.white70
                           : Colors.black87;
 
@@ -168,7 +241,7 @@ class HomeFixMec extends StatelessWidget {
                             child: Text(
                               "Cancelar",
                               style: TextStyle(
-                                color: isDark
+                                color: widget.isDark
                                     ? Colors.grey[400]
                                     : Colors.grey[700],
                               ),
@@ -197,8 +270,8 @@ class HomeFixMec extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => LoginPage(
-                            isDark: isDark,
-                            onThemeChanged: onThemeChanged,
+                            isDark: widget.isDark,
+                            onThemeChanged: widget.onThemeChanged,
                           ),
                         ),
                         (Route<dynamic> route) => false,
@@ -254,7 +327,6 @@ class HomeFixMec extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
 
-      // cuerpo
       body: SafeArea(
         child: Column(
           children: [
@@ -325,6 +397,39 @@ class HomeFixMec extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: SalomonBottomBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeFixMec(
+                    isDark: widget.isDark,
+                    onThemeChanged: widget.onThemeChanged,
+                    selectedIndex: 0,
+                  ),
+                ),
+              );
+            case 1:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsFixMec(
+                    isDark: widget.isDark,
+                    onThemeChanged: widget.onThemeChanged,
+                    selectedIndex: 1,
+                  ),
+                ),
+              );
+          }
+        },
+        items: items,
       ),
     );
   }
