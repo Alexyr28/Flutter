@@ -1,6 +1,9 @@
 import "package:fixmec/pages/ui/acerca_de.dart";
 import "package:fixmec/pages/ui/home.dart";
+import "package:fixmec/pages/ui/language.dart";
+import "package:fixmec/services/localization_service.dart";
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 
 class SettingsFixMec extends StatefulWidget {
   final bool isDark;
@@ -69,7 +72,9 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                       ),
                     ),
                     Text(
-                      "FixMec",
+                      Provider.of<LocalizationService>(
+                        context,
+                      ).translate("app_name"),
                       style: TextStyle(
                         fontFamily: "MiFuente",
                         color: Colors.white,
@@ -78,7 +83,9 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                       ),
                     ),
                     Text(
-                      "Diagnóstico Inteligente",
+                      Provider.of<LocalizationService>(
+                        context,
+                      ).translate("diag"),
                       style: TextStyle(
                         fontFamily: "MiFuente",
                         color: Colors.white70,
@@ -91,8 +98,8 @@ class _SettingsFixMec extends State<SettingsFixMec> {
               ),
               ListTile(
                 leading: const Icon(Icons.home_rounded, color: Colors.white),
-                title: const Text(
-                  "Inicio",
+                title: Text(
+                  Provider.of<LocalizationService>(context).translate("start"),
                   style: TextStyle(color: Colors.white),
                 ),
                 onTap: () => {
@@ -113,16 +120,18 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                   Icons.settings_suggest_outlined,
                   color: Colors.white,
                 ),
-                title: const Text(
-                  "Configuración",
+                title: Text(
+                  Provider.of<LocalizationService>(
+                    context,
+                  ).translate("configuration"),
                   style: TextStyle(color: Colors.white),
                 ),
                 onTap: () => Navigator.pop(context),
               ),
               ListTile(
                 leading: const Icon(Icons.info_outlined, color: Colors.white),
-                title: const Text(
-                  "Acerca de",
+                title: Text(
+                  Provider.of<LocalizationService>(context).translate("about"),
                   style: TextStyle(color: Colors.white),
                 ),
                 onTap: () => {
@@ -147,8 +156,8 @@ class _SettingsFixMec extends State<SettingsFixMec> {
           padding: const EdgeInsets.all(5.0),
           child: Image.asset("assets/icons/repair.png", fit: BoxFit.contain),
         ),
-        title: const Text(
-          "Configuración",
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("configuration"),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -187,10 +196,10 @@ class _SettingsFixMec extends State<SettingsFixMec> {
         child: ListView(
           children: [
             _SingleSection(
-              title: "General",
+              title: "general",
               children: [
                 _CustomListTile(
-                  title: "Modo Oscuro",
+                  title: "darkmod",
                   icon: Icons.dark_mode_outlined,
                   trailing: Switch(
                     value: _isDark,
@@ -202,12 +211,23 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                     },
                   ),
                 ),
-                const _CustomListTile(
-                  title: "Idioma",
+                _CustomListTile(
+                  title: "language",
                   icon: Icons.language_rounded,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LanguageFixMec(
+                          isDark: _isDark,
+                          onThemeChanged: widget.onThemeChanged,
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 _CustomListTile(
-                  title: "Notificaciones",
+                  title: "noti",
                   icon: Icons.notifications_active,
                   trailing: Switch(
                     value: _isnoti,
@@ -231,22 +251,24 @@ class _CustomListTile extends StatelessWidget {
   final String title;
   final IconData icon;
   final Widget? trailing;
+  final VoidCallback? onTap;
   const _CustomListTile({
     required this.title,
     required this.icon,
     this.trailing,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        title,
+        Provider.of<LocalizationService>(context).translate(title),
         style: TextStyle(fontFamily: "MiFuente", fontWeight: FontWeight.bold),
       ),
       leading: Icon(icon),
       trailing: trailing,
-      onTap: () {},
+      onTap: onTap,
     );
   }
 }
@@ -266,7 +288,7 @@ class _SingleSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              title!,
+              Provider.of<LocalizationService>(context).translate(title!),
               style: const TextStyle(
                 fontFamily: "MiFuente",
                 fontSize: 16,

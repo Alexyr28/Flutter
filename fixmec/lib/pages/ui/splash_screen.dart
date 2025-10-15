@@ -1,8 +1,10 @@
 import "package:animated_splash_screen/animated_splash_screen.dart";
 import "package:auto_size_text/auto_size_text.dart";
 import "package:fixmec/pages/ui/home.dart";
+import "package:fixmec/services/localization_service.dart";
 import "package:flutter/material.dart";
 import "package:lottie/lottie.dart";
+import "package:provider/provider.dart";
 
 class SplashScreenFixMec extends StatelessWidget {
   final bool isDark;
@@ -44,7 +46,9 @@ class SplashScreenFixMec extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                   Text(
-                    "FixMec",
+                    Provider.of<LocalizationService>(
+                      context,
+                    ).translate("app_name"),
                     style: TextStyle(
                       fontSize: 50,
                       fontFamily: 'MiFuente',
@@ -53,10 +57,12 @@ class SplashScreenFixMec extends StatelessWidget {
                       letterSpacing: 1.0,
                     ),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 28.0),
                     child: AutoSizeText(
-                      "Diagnóstico inteligente para tu moto",
+                      Provider.of<LocalizationService>(
+                        context,
+                      ).translate("diagnosis"),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18,

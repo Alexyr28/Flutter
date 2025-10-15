@@ -1,0 +1,33 @@
+const Map<String, String> en = {
+  "app_name": "FixMec",
+  "diagnosis": "Smart diagnostics for your motorcycle",
+  "diag": "Smart Diagnosis",
+  "start": "Home",
+  "configuration": "Configuration",
+  "about": "About",
+  "welcome": "Welcome to FixMec",
+  "systemis":
+      "Intelligent diagnostic system for motorcycles. Uses AI to detect and suggest solutions to common mechanical failures.",
+  "language": "Language",
+  "spanish": "Spanish",
+  "english": "English",
+  "general": "General",
+  "darkmod": "Dark Mode",
+  "noti": "Notifications",
+  "diagmotor": "Smart Motorcycle Diagnosis",
+  "description": "Description",
+  "descript2":
+      "FixMec is a mobile app designed to help motorcyclists diagnose mechanical faults quickly and intelligently. It combines technical knowledge with artificial intelligence to offer possible causes, solutions, and preventative maintenance tips.",
+  "functions": "Main functions",
+  "fun2":
+      "• Smart fault diagnosis \n• Chat with AI specialized in mechanics \n• Customizable dark mode \n• Modern and minimalist interface",
+  "technologies": "Technologies used",
+  "techno2":
+      "Flutter & Dart\nLottie Animations\nShared Preferences\nResponsive design with dark and tech blue theme",
+  "developers": "Developers",
+  "dev1": "UI/UX development",
+  "dev2": "Diagnostic logic and backend",
+  "dev3": "Testing, documentation and optimization",
+  "version": "Version",
+  "rights": "All rights reserved",
+};

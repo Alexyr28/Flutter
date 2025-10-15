@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:fixmec/pages/ui/splash_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fixmec/pages/ui/splash_screen.dart';
+import 'package:fixmec/services/localization_service.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const FixMec());
+  final localizationService = LocalizationService();
+  await localizationService.loadSavedLanguage();
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => localizationService,
+      child: const FixMec(),
+    ),
+  );
 }
 
 class FixMec extends StatefulWidget {
@@ -43,6 +52,7 @@ class _FixMecState extends State<FixMec> {
 
   @override
   Widget build(BuildContext context) {
+    final localization = Provider.of<LocalizationService>(context);
     if (!_isloaded) {
       return const MaterialApp(
         home: Scaffold(body: Center(child: CircularProgressIndicator())),
@@ -51,6 +61,7 @@ class _FixMecState extends State<FixMec> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      locale: localization.locale,
       theme: ThemeData.light().copyWith(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),

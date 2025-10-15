@@ -1,7 +1,9 @@
 import 'package:fixmec/pages/ui/acerca_de.dart';
 import 'package:fixmec/pages/ui/settings.dart';
+import 'package:fixmec/services/localization_service.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
 
 class HomeFixMec extends StatelessWidget {
   final bool isDark;
@@ -46,7 +48,9 @@ class HomeFixMec extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "FixMec",
+                      Provider.of<LocalizationService>(
+                        context,
+                      ).translate("app_name"),
                       style: TextStyle(
                         fontFamily: "MiFuente",
                         color: Colors.white,
@@ -55,7 +59,9 @@ class HomeFixMec extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Diagnóstico Inteligente",
+                      Provider.of<LocalizationService>(
+                        context,
+                      ).translate("diag"),
                       style: TextStyle(
                         fontFamily: "MiFuente",
                         color: Colors.white70,
@@ -68,8 +74,8 @@ class HomeFixMec extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.home_rounded, color: Colors.white),
-                title: const Text(
-                  "Inicio",
+                title: Text(
+                  Provider.of<LocalizationService>(context).translate("start"),
                   style: TextStyle(color: Colors.white),
                 ),
                 onTap: () => Navigator.pop(context),
@@ -79,8 +85,10 @@ class HomeFixMec extends StatelessWidget {
                   Icons.settings_suggest_outlined,
                   color: Colors.white,
                 ),
-                title: const Text(
-                  "Configuración",
+                title: Text(
+                  Provider.of<LocalizationService>(
+                    context,
+                  ).translate("configuration"),
                   style: TextStyle(color: Colors.white),
                 ),
                 onTap: () => {
@@ -98,8 +106,8 @@ class HomeFixMec extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.info_outlined, color: Colors.white),
-                title: const Text(
-                  "Acerca de",
+                title: Text(
+                  Provider.of<LocalizationService>(context).translate("about"),
                   style: TextStyle(color: Colors.white),
                 ),
                 onTap: () => {
@@ -124,8 +132,8 @@ class HomeFixMec extends StatelessWidget {
           padding: const EdgeInsets.all(5.0),
           child: Image.asset("assets/icons/repair.png", fit: BoxFit.contain),
         ),
-        title: const Text(
-          "FixMec",
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("app_name"),
           style: TextStyle(
             fontFamily: 'MiFuente',
             fontWeight: FontWeight.bold,
@@ -167,7 +175,7 @@ class HomeFixMec extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             Text(
-              "Bienvenido a FixMec",
+              Provider.of<LocalizationService>(context).translate("welcome"),
               style: TextStyle(
                 fontFamily: "MiFuente",
                 fontSize: 20,
@@ -176,8 +184,7 @@ class HomeFixMec extends StatelessWidget {
             ),
             SizedBox(height: 12),
             Text(
-              "Sistema inteligente de diagnóstico para motocicletas. "
-              "Usa IA para detectar y sugerir soluciones a fallas mecánicas comunes.",
+              Provider.of<LocalizationService>(context).translate("systemis"),
               style: TextStyle(
                 fontFamily: "MiFuente",
                 fontSize: 16,
