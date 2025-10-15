@@ -1,12 +1,14 @@
-import "package:animated_splash_screen/animated_splash_screen.dart";
-import "package:auto_size_text/auto_size_text.dart";
-import "package:fixmec/pages/ui/home.dart";
-import "package:fixmec/services/localization_service.dart";
-import "package:flutter/material.dart";
-import "package:lottie/lottie.dart";
-import "package:provider/provider.dart";
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fixmec/pages/ui/home.dart';
+import 'package:fixmec/pages/ui/login_page.dart';
+import 'package:fixmec/services/localization_service.dart';
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-class SplashScreenFixMec extends StatelessWidget {
+class SplashScreenFixMec extends StatefulWidget {
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
 
@@ -17,12 +19,87 @@ class SplashScreenFixMec extends StatelessWidget {
   });
 
   @override
+  State<SplashScreenFixMec> createState() => _SplashScreenFixMecState();
+}
+
+class _SplashScreenFixMecState extends State<SplashScreenFixMec>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    );
+
+    _initApp();
+  }
+
+  Future<void> _initApp() async {
+    try {
+      //inicialisar firebase toque de aqui hasta el otro comentario
+      await Firebase.initializeApp();
+
+      await Future.delayed(const Duration(seconds: 3));
+
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (!mounted) return;
+
+      _controller.forward();
+
+      await Future.delayed(const Duration(milliseconds: 600));
+      //vamos a verificar si hay un usuario logeado y segun eso va a home o login_page
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 700),
+          pageBuilder: (_, __, ___) => user == null
+              ? LoginPage(
+                  isDark: widget.isDark,
+                  onThemeChanged: widget.onThemeChanged,
+                )
+              : HomeFixMec(
+                  isDark: widget.isDark,
+                  onThemeChanged: widget.onThemeChanged,
+                ),
+          transitionsBuilder: (_, anim, __, child) =>
+              FadeTransition(opacity: anim, child: child),
+        ),
+      );
+    } catch (e) {
+      debugPrint("⚠️ Error en splash: $e");
+      // Si hay algún error, redirige al login, de aqui pa abajo no toque nada mas
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => LoginPage(
+              isDark: widget.isDark,
+              onThemeChanged: widget.onThemeChanged,
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final localization = Provider.of<LocalizationService>(context);
     final size = MediaQuery.of(context).size;
-    return AnimatedSplashScreen(
-      splashIconSize: size.height,
-      backgroundColor: Colors.transparent,
-      splash: Container(
+
+    return FadeTransition(
+      opacity: Tween(begin: 1.0, end: 0.0).animate(_controller),
+      child: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
@@ -37,8 +114,6 @@ class SplashScreenFixMec extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Lottie.asset(
                     "assets/animation/Happy Mechanic.json",
@@ -46,30 +121,26 @@ class SplashScreenFixMec extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                   Text(
-                    Provider.of<LocalizationService>(
-                      context,
-                    ).translate("app_name"),
-                    style: TextStyle(
+                    localization.translate("app_name"),
+                    style: const TextStyle(
                       fontSize: 50,
                       fontFamily: 'MiFuente',
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87, // texto más negro
-                      letterSpacing: 1.0,
+                      color: Colors.black87,
+                      decoration: TextDecoration.none,
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 28.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 28.0),
                     child: AutoSizeText(
-                      Provider.of<LocalizationService>(
-                        context,
-                      ).translate("diagnosis"),
+                      localization.translate("diagnosis"),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontFamily: "MiFuente",
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
-                        letterSpacing: 0.2,
+                        decoration: TextDecoration.none,
                       ),
                       minFontSize: 12,
                       maxLines: 2,
@@ -82,9 +153,6 @@ class SplashScreenFixMec extends StatelessWidget {
           ),
         ),
       ),
-      duration: 3000,
-      nextScreen: HomeFixMec(isDark: isDark, onThemeChanged: onThemeChanged),
-      splashTransition: SplashTransition.fadeTransition,
     );
   }
 }

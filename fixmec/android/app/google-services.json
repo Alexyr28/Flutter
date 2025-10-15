@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "925118669171",
+    "project_id": "fixmec-116be",
+    "storage_bucket": "fixmec-116be.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925118669171:android:4e8239e1e00cfc09446506",
+        "android_client_info": {
+          "package_name": "com.example.fixmec"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ-ALrA3sf-VnQP2ySngo6Azw7gC_dfxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

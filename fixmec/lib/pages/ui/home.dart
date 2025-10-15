@@ -4,10 +4,14 @@ import 'package:fixmec/services/localization_service.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fixmec/pages/ui/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeFixMec extends StatelessWidget {
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
+
   const HomeFixMec({
     super.key,
     required this.isDark,
@@ -51,7 +55,7 @@ class HomeFixMec extends StatelessWidget {
                       Provider.of<LocalizationService>(
                         context,
                       ).translate("app_name"),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "MiFuente",
                         color: Colors.white,
                         fontSize: 22,
@@ -62,7 +66,7 @@ class HomeFixMec extends StatelessWidget {
                       Provider.of<LocalizationService>(
                         context,
                       ).translate("diag"),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "MiFuente",
                         color: Colors.white70,
                         fontSize: 14,
@@ -76,7 +80,7 @@ class HomeFixMec extends StatelessWidget {
                 leading: const Icon(Icons.home_rounded, color: Colors.white),
                 title: Text(
                   Provider.of<LocalizationService>(context).translate("start"),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
                 onTap: () => Navigator.pop(context),
               ),
@@ -89,7 +93,7 @@ class HomeFixMec extends StatelessWidget {
                   Provider.of<LocalizationService>(
                     context,
                   ).translate("configuration"),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
                 onTap: () => {
                   Navigator.pop(context),
@@ -108,7 +112,7 @@ class HomeFixMec extends StatelessWidget {
                 leading: const Icon(Icons.info_outlined, color: Colors.white),
                 title: Text(
                   Provider.of<LocalizationService>(context).translate("about"),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
                 onTap: () => {
                   Navigator.pop(context),
@@ -123,6 +127,87 @@ class HomeFixMec extends StatelessWidget {
                   ),
                 },
               ),
+
+              // inicio cerrar sesión boton
+              ListTile(
+                leading: const Icon(Icons.logout, color: Colors.white),
+                title: const Text(
+                  "Cerrar sesión",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () async {
+                  final confirmLogout = await showDialog<bool>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      final bgColor = isDark
+                          ? const Color(0xFF1E1E1E)
+                          : Colors.white;
+                      final textColor = isDark
+                          ? Colors.white70
+                          : Colors.black87;
+
+                      return AlertDialog(
+                        backgroundColor: bgColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        title: Text(
+                          "Confirmar cierre de sesión",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: textColor,
+                          ),
+                        ),
+                        //msg de seguridad
+                        content: Text(
+                          "¿Estás seguro de que deseas cerrar sesión?",
+                          style: TextStyle(color: textColor),
+                        ),
+                        actions: [
+                          TextButton(
+                            child: Text(
+                              "Cancelar",
+                              style: TextStyle(
+                                color: isDark
+                                    ? Colors.grey[400]
+                                    : Colors.grey[700],
+                              ),
+                            ),
+                            onPressed: () => Navigator.of(context).pop(false),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.redAccent,
+                            ),
+                            child: const Text("Cerrar sesión"),
+                            onPressed: () => Navigator.of(context).pop(true),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+
+                  if (confirmLogout == true) {
+                    await FirebaseAuth.instance.signOut();
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.remove('isLoggedIn');
+
+                    if (context.mounted) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(
+                            isDark: isDark,
+                            onThemeChanged: onThemeChanged,
+                          ),
+                        ),
+                        (Route<dynamic> route) => false,
+                      );
+                    }
+                  }
+                },
+              ),
+              // fin cerrar sesión, mas de aqui no toque, solo el boton
             ],
           ),
         ),
@@ -134,7 +219,7 @@ class HomeFixMec extends StatelessWidget {
         ),
         title: Text(
           Provider.of<LocalizationService>(context).translate("app_name"),
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: 'MiFuente',
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -176,28 +261,26 @@ class HomeFixMec extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               Provider.of<LocalizationService>(context).translate("welcome"),
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: "MiFuente",
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Text(
               Provider.of<LocalizationService>(context).translate("systemis"),
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: "MiFuente",
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
-            // carrusel
             CarouselSlider(
               options: CarouselOptions(
                 height: 190.0,
                 viewportFraction: 0.8,
-                initialPage: 0,
                 enableInfiniteScroll: true,
                 autoPlay: true,
                 autoPlayInterval: const Duration(seconds: 3),
@@ -205,10 +288,7 @@ class HomeFixMec extends StatelessWidget {
                 autoPlayCurve: Curves.fastOutSlowIn,
                 enlargeCenterPage: true,
                 enlargeFactor: 0.25,
-                scrollDirection: Axis.horizontal,
               ),
-
-              // img de las motos
               items: ["assets/motos/apache.png", "assets/motos/evo.png"].map((
                 imgPath,
               ) {
@@ -223,11 +303,11 @@ class HomeFixMec extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.white,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                            color: const Color(0xFF00B4DB),
+                            color: Color(0xFF00B4DB),
                             blurRadius: 6,
-                            offset: const Offset(0, 4),
+                            offset: Offset(0, 4),
                           ),
                         ],
                       ),
@@ -235,10 +315,7 @@ class HomeFixMec extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: Image.asset(
-                            imgPath,
-                            fit: BoxFit.contain, //tamaño imag
-                          ),
+                          child: Image.asset(imgPath, fit: BoxFit.contain),
                         ),
                       ),
                     );

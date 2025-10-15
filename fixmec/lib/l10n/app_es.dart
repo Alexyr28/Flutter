@@ -6,6 +6,8 @@ const Map<String, String> es = {
   "configuration": "Configuración",
   "about": "Acerca de",
   "welcome": "Bienvenido a FixMec",
+  "login": "Iniciar sesión",
+  "register": "Registrarse",
   "systemis":
       "Sistema inteligente de diagnóstico para motocicletas.Usa IA para detectar y sugerir soluciones a fallas mecánicas comunes.",
   "language": "Idioma",
