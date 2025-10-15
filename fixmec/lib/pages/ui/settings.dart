@@ -4,14 +4,17 @@ import "package:fixmec/pages/ui/language.dart";
 import "package:fixmec/services/localization_service.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
+import "package:salomon_bottom_bar/salomon_bottom_bar.dart";
 
 class SettingsFixMec extends StatefulWidget {
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
+  final int selectedIndex;
   const SettingsFixMec({
     super.key,
     required this.isDark,
     required this.onThemeChanged,
+    this.selectedIndex = 0,
   });
 
   @override
@@ -21,11 +24,13 @@ class SettingsFixMec extends StatefulWidget {
 class _SettingsFixMec extends State<SettingsFixMec> {
   bool _isDark = false;
   bool _isnoti = false;
+  late int _currentIndex;
 
   @override
   void initState() {
     super.initState();
     _isDark = widget.isDark;
+    _currentIndex = widget.selectedIndex;
   }
 
   @override
@@ -40,6 +45,63 @@ class _SettingsFixMec extends State<SettingsFixMec> {
 
   @override
   Widget build(BuildContext context) {
+    final items = [
+      SalomonBottomBarItem(
+        icon: Icon(Icons.home_rounded),
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("start"),
+          style: const TextStyle(
+            fontFamily: "MiFuente",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        selectedColor: const Color(0xFF00B4DB),
+      ),
+      SalomonBottomBarItem(
+        icon: const Icon(Icons.chat_outlined),
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("chat"),
+          style: const TextStyle(
+            fontFamily: "MiFuente",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        selectedColor: const Color(0xFF00B4DB),
+      ),
+      SalomonBottomBarItem(
+        icon: Icon(Icons.query_stats_outlined),
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("diagnost"),
+          style: const TextStyle(
+            fontFamily: "MiFuente",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        selectedColor: const Color(0xFF00B4DB),
+      ),
+      SalomonBottomBarItem(
+        icon: Icon(Icons.warning_amber_outlined),
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("fault"),
+          style: const TextStyle(
+            fontFamily: "MiFuente",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        selectedColor: const Color(0xFF00B4DB),
+      ),
+      SalomonBottomBarItem(
+        icon: Icon(Icons.history),
+        title: Text(
+          Provider.of<LocalizationService>(context).translate("history"),
+          style: const TextStyle(
+            fontFamily: "MiFuente",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        selectedColor: const Color(0xFF00B4DB),
+      ),
+    ];
     return Scaffold(
       endDrawer: Drawer(
         child: Container(
@@ -242,6 +304,39 @@ class _SettingsFixMec extends State<SettingsFixMec> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: SalomonBottomBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeFixMec(
+                    isDark: _isDark,
+                    onThemeChanged: widget.onThemeChanged,
+                    selectedIndex: 0,
+                  ),
+                ),
+              );
+            case 1:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsFixMec(
+                    isDark: widget.isDark,
+                    onThemeChanged: widget.onThemeChanged,
+                    selectedIndex: 1,
+                  ),
+                ),
+              );
+          }
+        },
+        items: items,
       ),
     );
   }
