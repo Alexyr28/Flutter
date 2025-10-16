@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fixmec/pages/ui/chtabot.dart';
 import 'package:fixmec/pages/ui/diagnosis.dart';
 import 'package:fixmec/pages/ui/failures.dart';
@@ -38,61 +39,72 @@ class _CustomNavAppBar extends State<CustomNavAppBar> {
     final items = [
       SalomonBottomBarItem(
         icon: Icon(Icons.home_rounded),
-        title: Text(
+        title: AutoSizeText(
           loca.translate("start"),
           style: const TextStyle(
             fontFamily: "MiFuente",
             fontWeight: FontWeight.bold,
           ),
+          maxLines: 1,
+          minFontSize: 8,
         ),
         selectedColor: const Color(0xFF00B4DB),
       ),
       SalomonBottomBarItem(
         icon: const Icon(Icons.chat_outlined),
-        title: Text(
+        title: AutoSizeText(
           loca.translate("chat"),
           style: const TextStyle(
             fontFamily: "MiFuente",
             fontWeight: FontWeight.bold,
           ),
+          maxLines: 1,
+          minFontSize: 8,
         ),
         selectedColor: const Color(0xFF00B4DB),
       ),
       SalomonBottomBarItem(
         icon: Icon(Icons.query_stats_outlined),
-        title: Text(
+        title: AutoSizeText(
           loca.translate("diagnost"),
           style: const TextStyle(
             fontFamily: "MiFuente",
             fontWeight: FontWeight.bold,
           ),
+          maxLines: 1,
+          minFontSize: 8,
         ),
         selectedColor: const Color(0xFF00B4DB),
       ),
       SalomonBottomBarItem(
         icon: Icon(Icons.warning_amber_outlined),
-        title: Text(
+        title: AutoSizeText(
           loca.translate("fault"),
           style: const TextStyle(
             fontFamily: "MiFuente",
             fontWeight: FontWeight.bold,
           ),
+          maxLines: 1,
+          minFontSize: 8,
         ),
         selectedColor: const Color(0xFF00B4DB),
       ),
       SalomonBottomBarItem(
         icon: Icon(Icons.history),
-        title: Text(
+        title: AutoSizeText(
           loca.translate("history"),
           style: const TextStyle(
             fontFamily: "MiFuente",
             fontWeight: FontWeight.bold,
           ),
+          maxLines: 1,
+          minFontSize: 8,
         ),
         selectedColor: const Color(0xFF00B4DB),
       ),
     ];
     return SalomonBottomBar(
+      itemPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       currentIndex: currentIndex,
       onTap: (index) {
         Widget nextPage;
