@@ -29,7 +29,7 @@ const Map<String, String> en = {
   "developers": "Developers",
   "dev1": "UI/UX development",
   "dev2": "Diagnostic logic and backend",
-  "dev3": "Testing, documentation and optimization",
+  "dev3": "Testing, development, documentation and optimization",
   "version": "Version",
   "rights": "All rights reserved",
   "chat": "Chat",
