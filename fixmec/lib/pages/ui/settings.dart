@@ -1,20 +1,21 @@
-import "package:fixmec/pages/ui/acerca_de.dart";
-import "package:fixmec/pages/ui/home.dart";
 import "package:fixmec/pages/ui/language.dart";
 import "package:fixmec/services/localization_service.dart";
+import "package:fixmec/widgets/appbar.dart";
+import "package:fixmec/widgets/drawerheader.dart";
+import "package:fixmec/widgets/navigationappbar.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
-import "package:salomon_bottom_bar/salomon_bottom_bar.dart";
 
 class SettingsFixMec extends StatefulWidget {
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
-  final int selectedIndex;
+  final int currentIndex;
+
   const SettingsFixMec({
     super.key,
     required this.isDark,
     required this.onThemeChanged,
-    this.selectedIndex = 0,
+    required this.currentIndex,
   });
 
   @override
@@ -30,7 +31,7 @@ class _SettingsFixMec extends State<SettingsFixMec> {
   void initState() {
     super.initState();
     _isDark = widget.isDark;
-    _currentIndex = widget.selectedIndex;
+    _currentIndex = widget.currentIndex;
   }
 
   @override
@@ -45,214 +46,16 @@ class _SettingsFixMec extends State<SettingsFixMec> {
 
   @override
   Widget build(BuildContext context) {
-    final items = [
-      SalomonBottomBarItem(
-        icon: Icon(Icons.home_rounded),
-        title: Text(
-          Provider.of<LocalizationService>(context).translate("start"),
-          style: const TextStyle(
-            fontFamily: "MiFuente",
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        selectedColor: const Color(0xFF00B4DB),
-      ),
-      SalomonBottomBarItem(
-        icon: const Icon(Icons.chat_outlined),
-        title: Text(
-          Provider.of<LocalizationService>(context).translate("chat"),
-          style: const TextStyle(
-            fontFamily: "MiFuente",
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        selectedColor: const Color(0xFF00B4DB),
-      ),
-      SalomonBottomBarItem(
-        icon: Icon(Icons.query_stats_outlined),
-        title: Text(
-          Provider.of<LocalizationService>(context).translate("diagnost"),
-          style: const TextStyle(
-            fontFamily: "MiFuente",
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        selectedColor: const Color(0xFF00B4DB),
-      ),
-      SalomonBottomBarItem(
-        icon: Icon(Icons.warning_amber_outlined),
-        title: Text(
-          Provider.of<LocalizationService>(context).translate("fault"),
-          style: const TextStyle(
-            fontFamily: "MiFuente",
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        selectedColor: const Color(0xFF00B4DB),
-      ),
-      SalomonBottomBarItem(
-        icon: Icon(Icons.history),
-        title: Text(
-          Provider.of<LocalizationService>(context).translate("history"),
-          style: const TextStyle(
-            fontFamily: "MiFuente",
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        selectedColor: const Color(0xFF00B4DB),
-      ),
-    ];
     return Scaffold(
-      endDrawer: Drawer(
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 35,
-                      backgroundColor: const Color.fromARGB(255, 65, 156, 221),
-                      child: Image.asset(
-                        "assets/icons/repair.png",
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    Text(
-                      Provider.of<LocalizationService>(
-                        context,
-                      ).translate("app_name"),
-                      style: TextStyle(
-                        fontFamily: "MiFuente",
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      Provider.of<LocalizationService>(
-                        context,
-                      ).translate("diag"),
-                      style: TextStyle(
-                        fontFamily: "MiFuente",
-                        color: Colors.white70,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.home_rounded, color: Colors.white),
-                title: Text(
-                  Provider.of<LocalizationService>(context).translate("start"),
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () => {
-                  Navigator.pop(context),
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomeFixMec(
-                        isDark: _isDark,
-                        onThemeChanged: widget.onThemeChanged,
-                      ),
-                    ),
-                  ),
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.settings_suggest_outlined,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  Provider.of<LocalizationService>(
-                    context,
-                  ).translate("configuration"),
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () => Navigator.pop(context),
-              ),
-              ListTile(
-                leading: const Icon(Icons.info_outlined, color: Colors.white),
-                title: Text(
-                  Provider.of<LocalizationService>(context).translate("about"),
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () => {
-                  Navigator.pop(context),
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AboutFixMec(
-                        isDark: _isDark,
-                        onThemeChanged: widget.onThemeChanged,
-                      ),
-                    ),
-                  ),
-                },
-              ),
-            ],
-          ),
-        ),
+      endDrawer: CustomDrawerheader(
+        isDark: widget.isDark,
+        onThemeChanged: widget.onThemeChanged,
+        currentIndex: _currentIndex,
       ),
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Image.asset("assets/icons/repair.png", fit: BoxFit.contain),
-        ),
-        title: Text(
-          Provider.of<LocalizationService>(context).translate("configuration"),
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontFamily: "MiFuente",
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          Builder(
-            builder: (context) {
-              return IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-                icon: const Icon(
-                  Icons.menu_rounded,
-                  color: Colors.white,
-                  size: 40,
-                ),
-              );
-            },
-          ),
-        ],
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomLeft,
-              colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
-            ),
-          ),
-        ),
-        backgroundColor: Colors.transparent,
+      appBar: CustomAppBar(
+        title: Provider.of<LocalizationService>(
+          context,
+        ).translate("configuration"),
       ),
       body: Center(
         child: ListView(
@@ -283,6 +86,7 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                         builder: (context) => LanguageFixMec(
                           isDark: _isDark,
                           onThemeChanged: widget.onThemeChanged,
+                          currentIndex: _currentIndex,
                         ),
                       ),
                     );
@@ -305,38 +109,10 @@ class _SettingsFixMec extends State<SettingsFixMec> {
           ],
         ),
       ),
-      bottomNavigationBar: SalomonBottomBar(
+      bottomNavigationBar: CustomNavAppBar(
         currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-          switch (index) {
-            case 0:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HomeFixMec(
-                    isDark: _isDark,
-                    onThemeChanged: widget.onThemeChanged,
-                    selectedIndex: 0,
-                  ),
-                ),
-              );
-            case 1:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SettingsFixMec(
-                    isDark: widget.isDark,
-                    onThemeChanged: widget.onThemeChanged,
-                    selectedIndex: 1,
-                  ),
-                ),
-              );
-          }
-        },
-        items: items,
+        isDark: widget.isDark,
+        onThemeChanged: widget.onThemeChanged,
       ),
     );
   }

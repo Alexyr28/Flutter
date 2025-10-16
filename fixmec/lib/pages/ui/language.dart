@@ -1,184 +1,32 @@
-import 'package:fixmec/pages/ui/acerca_de.dart';
-import 'package:fixmec/pages/ui/home.dart';
-import 'package:fixmec/pages/ui/settings.dart';
 import 'package:fixmec/services/localization_service.dart';
+import 'package:fixmec/widgets/appbar.dart';
+import 'package:fixmec/widgets/drawerheader.dart';
+import 'package:fixmec/widgets/navigationappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LanguageFixMec extends StatelessWidget {
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
+  final int currentIndex;
 
   const LanguageFixMec({
     super.key,
     required this.isDark,
     required this.onThemeChanged,
+    required this.currentIndex,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: Drawer(
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 35,
-                      backgroundColor: const Color.fromARGB(255, 65, 156, 221),
-                      child: Image.asset(
-                        "assets/icons/repair.png",
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    Text(
-                      Provider.of<LocalizationService>(
-                        context,
-                      ).translate("app_name"),
-                      style: TextStyle(
-                        fontFamily: "MiFuente",
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      Provider.of<LocalizationService>(
-                        context,
-                      ).translate("diag"),
-                      style: TextStyle(
-                        fontFamily: "MiFuente",
-                        color: Colors.white70,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.home_rounded, color: Colors.white),
-                title: Text(
-                  Provider.of<LocalizationService>(context).translate("start"),
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () => {
-                  Navigator.pop(context),
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomeFixMec(
-                        isDark: isDark,
-                        onThemeChanged: onThemeChanged,
-                      ),
-                    ),
-                  ),
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.settings_suggest_outlined,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  Provider.of<LocalizationService>(
-                    context,
-                  ).translate("configuration"),
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () => {
-                  Navigator.pop(context),
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SettingsFixMec(
-                        isDark: isDark,
-                        onThemeChanged: onThemeChanged,
-                      ),
-                    ),
-                  ),
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.info_outlined, color: Colors.white),
-                title: Text(
-                  Provider.of<LocalizationService>(context).translate("about"),
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () => {
-                  Navigator.pop(context),
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AboutFixMec(
-                        isDark: isDark,
-                        onThemeChanged: onThemeChanged,
-                      ),
-                    ),
-                  ),
-                },
-              ),
-            ],
-          ),
-        ),
+      endDrawer: CustomDrawerheader(
+        isDark: isDark,
+        onThemeChanged: onThemeChanged,
+        currentIndex: currentIndex,
       ),
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Image.asset("assets/icons/repair.png", fit: BoxFit.contain),
-        ),
-        title: Text(
-          Provider.of<LocalizationService>(context).translate("language"),
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontFamily: "MiFuente",
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          Builder(
-            builder: (context) {
-              return IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-                icon: const Icon(
-                  Icons.menu_rounded,
-                  color: Colors.white,
-                  size: 40,
-                ),
-              );
-            },
-          ),
-        ],
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomLeft,
-              colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
-            ),
-          ),
-        ),
-        backgroundColor: Colors.transparent,
+      appBar: CustomAppBar(
+        title: Provider.of<LocalizationService>(context).translate("language"),
       ),
       body: Center(
         child: Padding(
@@ -292,6 +140,11 @@ class LanguageFixMec extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: CustomNavAppBar(
+        currentIndex: currentIndex,
+        isDark: isDark,
+        onThemeChanged: onThemeChanged,
       ),
     );
   }

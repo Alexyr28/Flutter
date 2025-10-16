@@ -55,12 +55,15 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     } on FirebaseAuthException catch (e) {
-      String msg = "Error: ${e.message}";
-      if (e.code == "user-not-found")
-        msg = "No existe un usuario con ese correo.";
+      String msg =
+          "${Provider.of<LocalizationService>(context).translate("error")}: ${e.message}";
+      if (e.code == "user-not-found") {
+        msg = Provider.of<LocalizationService>(context).translate("usernot");
+      }
       if (e.code == "wrong-password") msg = "Contraseña incorrecta.";
-      if (e.code == "email-already-in-use")
-        msg = "El correo ya está registrado.";
+      if (e.code == "email-already-in-use") {
+        msg = Provider.of<LocalizationService>(context).translate("emailreg");
+      }
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
     } finally {
@@ -68,10 +71,14 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  InputDecoration _inputDeco(String label, IconData icon) {
+  InputDecoration _inputDeco(
+    BuildContext context,
+    String label,
+    IconData icon,
+  ) {
     return InputDecoration(
       prefixIcon: Icon(icon, color: Colors.white70),
-      labelText: label,
+      labelText: Provider.of<LocalizationService>(context).translate(label),
       labelStyle: const TextStyle(color: Colors.white70),
       enabledBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.white38),
@@ -84,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildTabButton(String text, bool isSignIn) {
+  Widget _buildTabButton(BuildContext context, String text, bool isSignIn) {
     final active = (isSignIn && _isLogin) || (!isSignIn && !_isLogin);
     return Expanded(
       child: GestureDetector(
@@ -92,11 +99,12 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
+            // ignore: deprecated_member_use
             color: active ? Colors.white.withOpacity(0.25) : Colors.transparent,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
-            text,
+            Provider.of<LocalizationService>(context).translate(text),
             style: TextStyle(
               color: active ? Colors.white : Colors.white60,
               fontWeight: active ? FontWeight.bold : FontWeight.normal,
@@ -133,8 +141,8 @@ class _LoginPageState extends State<LoginPage> {
                   height: size.height * 0.14,
                 ),
                 const SizedBox(height: 6),
-                const Text(
-                  "FixMec",
+                Text(
+                  loc.translate("app_name"),
                   style: TextStyle(
                     fontFamily: "MiFuente",
                     fontSize: 25,
@@ -161,8 +169,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: Row(
                     children: [
-                      _buildTabButton("Sign In", true),
-                      _buildTabButton("Sign Up", false),
+                      _buildTabButton(context, "login", true),
+                      _buildTabButton(context, "register", false),
                     ],
                   ),
                 ),
@@ -177,22 +185,18 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         controller: _emailCtrl,
                         style: const TextStyle(color: Colors.white),
-                        decoration: _inputDeco(
-                          "Correo electrónico",
-                          Icons.email,
-                        ),
+                        decoration: _inputDeco(context, "email", Icons.email),
                         validator: (v) =>
-                            v!.isEmpty ? "Por favor ingresa tu correo" : null,
+                            v!.isEmpty ? loc.translate("putemail") : null,
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
                         controller: _passwordCtrl,
                         obscureText: true,
                         style: const TextStyle(color: Colors.white),
-                        decoration: _inputDeco("Contraseña", Icons.lock),
-                        validator: (v) => v!.length < 6
-                            ? "Debe tener al menos 6 caracteres"
-                            : null,
+                        decoration: _inputDeco(context, "password", Icons.lock),
+                        validator: (v) =>
+                            v!.length < 6 ? loc.translate("mincharac") : null,
                       ),
                       if (!_isLogin) ...[
                         const SizedBox(height: 20),
@@ -201,11 +205,12 @@ class _LoginPageState extends State<LoginPage> {
                           obscureText: true,
                           style: const TextStyle(color: Colors.white),
                           decoration: _inputDeco(
-                            "Confirmar contraseña",
+                            context,
+                            "confirmpass",
                             Icons.lock_outline,
                           ),
                           validator: (v) => v != _passwordCtrl.text
-                              ? "Las contraseñas no coinciden"
+                              ? loc.translate("passnot")
                               : null,
                         ),
                       ],
@@ -223,7 +228,9 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               child: Text(
-                                _isLogin ? "Iniciar sesión" : "Registrarse",
+                                _isLogin
+                                    ? loc.translate("login")
+                                    : loc.translate("register"),
                               ),
                             ),
                     ],
