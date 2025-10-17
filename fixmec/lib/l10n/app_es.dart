@@ -52,4 +52,6 @@ const Map<String, String> es = {
   "cancel": "Cancelar",
   "chatb": "Chat Bot",
   "diag1": "Diagnóstico",
+  "write": "Escribe tu Mensaje...",
+  "mechanic": "Eres un mecánico experto en diagnóstico de motos.",
 };

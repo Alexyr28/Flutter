@@ -47,6 +47,10 @@ dependencies:
   firebase_core: ^4.2.0
   firebase_auth: ^6.1.1
   salomon_bottom_bar: ^3.3.2
+  http: ^1.2.0
+  flutter_markdown: ^0.6.17
+  markdown_widget: ^2.3.2
+
 
 dev_dependencies:
   flutter_test:

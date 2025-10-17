@@ -79,7 +79,11 @@ class _LoginPageState extends State<LoginPage> {
     return InputDecoration(
       prefixIcon: Icon(icon, color: Colors.white70),
       labelText: Provider.of<LocalizationService>(context).translate(label),
-      labelStyle: const TextStyle(color: Colors.white70),
+      labelStyle: const TextStyle(
+        color: Colors.white70,
+        fontFamily: "MiFuente",
+        fontWeight: FontWeight.bold,
+      ),
       enabledBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.white38),
         borderRadius: BorderRadius.circular(12),
@@ -108,6 +112,7 @@ class _LoginPageState extends State<LoginPage> {
             style: TextStyle(
               color: active ? Colors.white : Colors.white60,
               fontWeight: active ? FontWeight.bold : FontWeight.normal,
+              fontFamily: "MiFuente",
             ),
           ),
         ),
@@ -184,7 +189,10 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       TextFormField(
                         controller: _emailCtrl,
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "MiFuente",
+                        ),
                         decoration: _inputDeco(context, "email", Icons.email),
                         validator: (v) =>
                             v!.isEmpty ? loc.translate("putemail") : null,
@@ -193,7 +201,11 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         controller: _passwordCtrl,
                         obscureText: true,
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "MiFuente",
+                          fontWeight: FontWeight.bold,
+                        ),
                         decoration: _inputDeco(context, "password", Icons.lock),
                         validator: (v) =>
                             v!.length < 6 ? loc.translate("mincharac") : null,
@@ -203,7 +215,11 @@ class _LoginPageState extends State<LoginPage> {
                         TextFormField(
                           controller: _confirmCtrl,
                           obscureText: true,
-                          style: const TextStyle(color: Colors.white),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "MiFuente",
+                            fontWeight: FontWeight.bold,
+                          ),
                           decoration: _inputDeco(
                             context,
                             "confirmpass",
@@ -231,6 +247,10 @@ class _LoginPageState extends State<LoginPage> {
                                 _isLogin
                                     ? loc.translate("login")
                                     : loc.translate("register"),
+                                style: TextStyle(
+                                  fontFamily: "MiFuente",
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                     ],
