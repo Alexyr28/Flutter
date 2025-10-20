@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fixmec/pages/ui/home.dart';
 import 'package:fixmec/pages/ui/login_page.dart';
@@ -56,7 +58,7 @@ class _SplashScreenFixMecState extends State<SplashScreenFixMec>
         context,
         PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 700),
-          pageBuilder: (_, __, ___) => user == null
+          pageBuilder: (_, _, _) => user == null
               ? LoginPage(
                   isDark: widget.isDark,
                   onThemeChanged: widget.onThemeChanged,
@@ -65,7 +67,7 @@ class _SplashScreenFixMecState extends State<SplashScreenFixMec>
                   isDark: widget.isDark,
                   onThemeChanged: widget.onThemeChanged,
                 ),
-          transitionsBuilder: (_, anim, __, child) =>
+          transitionsBuilder: (_, anim, _, child) =>
               FadeTransition(opacity: anim, child: child),
         ),
       );
