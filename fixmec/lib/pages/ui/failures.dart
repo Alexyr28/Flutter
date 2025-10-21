@@ -75,7 +75,6 @@ class _FailuresFixMec extends State<FailuresFixMec> {
               ),
             ],
           ),
-
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -86,6 +85,7 @@ class _FailuresFixMec extends State<FailuresFixMec> {
               const SizedBox(height: 10),
               AutoSizeText(
                 loc.translate("motorfailures"),
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontFamily: "MiFuente",
@@ -128,7 +128,8 @@ class _FailuresFixMec extends State<FailuresFixMec> {
               ),
               const SizedBox(height: 10),
               AutoSizeText(
-                'Fallas Electricas',
+                loc.translate("electricalfailures"),
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontFamily: "MiFuente",
@@ -166,9 +167,9 @@ class _FailuresFixMec extends State<FailuresFixMec> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Lottie.asset("assets/animation/Fuel meter.json", height: 100),
-              const SizedBox(height: 10),
               AutoSizeText(
-                'Fallas Combustible',
+                loc.translate("fuelfailures"),
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontFamily: "MiFuente",
@@ -205,11 +206,15 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Lottie.asset("assets/animation/Engine Animation.json"),
+              Lottie.asset("assets/animation/Settings icon.json", height: 100),
               const SizedBox(height: 10),
-              Text(
+              AutoSizeText(
                 loc.translate("physicalfailures"),
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "MiFuente",
+                ),
               ),
             ],
           ),
@@ -242,11 +247,18 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Lottie.asset("assets/animation/Engine Animation.json"),
+              Lottie.asset(
+                "assets/animation/Vital Sign Heart Beat Line Electrocardiogram.json",
+                height: 100,
+              ),
               const SizedBox(height: 10),
-              Text(
+              AutoSizeText(
                 loc.translate("diagnostic_help"),
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "MiFuente",
+                ),
               ),
             ],
           ),

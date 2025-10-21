@@ -86,7 +86,6 @@ flutter:
     - assets/animation/
     - assets/icons/repair.png
     - assets/motos/
-    - assets/fallas/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
