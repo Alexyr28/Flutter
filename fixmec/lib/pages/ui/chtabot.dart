@@ -31,6 +31,10 @@ class _ChatbotFixMecState extends State<ChatbotFixMec> {
       context,
       listen: false,
     ).translate("mechanic");
+    final serverPrompt = Provider.of<LocalizationService>(
+      context,
+      listen: false,
+    ).translate("server");
     setState(() {
       _message.add({"sender": "user", "text": text});
       _isloading = true;
@@ -66,7 +70,7 @@ class _ChatbotFixMecState extends State<ChatbotFixMec> {
           _message.add({
             "sender": "bot",
             //"text": "Error: ${response.statusCode}\n${response.body}",
-            "text": "Tenemos problemas con nuestro servidor intentalo de nuevo",
+            "text": serverPrompt,
           });
         });
       }
@@ -93,7 +97,9 @@ class _ChatbotFixMecState extends State<ChatbotFixMec> {
                 final msg = _message[index];
                 final isUser = msg["sender"] == "user";
                 return Align(
-                  alignment: isUser ? Alignment.center : Alignment.centerLeft,
+                  alignment: isUser
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
                   child: Container(
                     margin: const EdgeInsets.symmetric(
                       vertical: 4,

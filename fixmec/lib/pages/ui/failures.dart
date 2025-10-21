@@ -1,4 +1,6 @@
+import 'package:fixmec/services/localization_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FailuresFixMec extends StatefulWidget {
   final int currentIndex;
@@ -52,6 +54,7 @@ class _FailuresFixMec extends State<FailuresFixMec> {
 
   // cuadro de fallas
   Widget _buildFailuresMotor(BuildContext context) {
+    final loc = Provider.of<LocalizationService>(context);
     return Center(
       child: InkWell(
         borderRadius: BorderRadius.circular(18),
@@ -76,8 +79,8 @@ class _FailuresFixMec extends State<FailuresFixMec> {
             children: [
               Image.asset('assets/fallas/motor.png', height: 70),
               const SizedBox(height: 10),
-              const Text(
-                'Fallas Motor',
+              Text(
+                loc.translate("motorfailures"),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
@@ -112,7 +115,7 @@ class _FailuresFixMec extends State<FailuresFixMec> {
             children: [
               Image.asset('assets/fallas/electricas.png', height: 70),
               const SizedBox(height: 10),
-              const Text(
+              Text(
                 'Fallas Electricas',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),

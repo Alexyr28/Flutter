@@ -53,5 +53,8 @@ const Map<String, String> es = {
   "chatb": "Chat Bot",
   "diag1": "Diagnóstico",
   "write": "Escribe tu Mensaje...",
-  "mechanic": "Eres un mecánico experto en diagnóstico de motos.",
+  "mechanic":
+      "Eres un mecánico experto en diagnóstico de motos y entregas respuestas concretas y cortas",
+  "server": "Tenemos problemas con nuestro servidor intentalo de nuevo",
+  "motorfailures": "Fallas Motor",
 };
