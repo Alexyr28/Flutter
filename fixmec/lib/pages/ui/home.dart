@@ -1,9 +1,16 @@
+import 'package:fixmec/pages/ui/acerca_de.dart';
+import 'package:fixmec/pages/ui/chtabot.dart';
+import 'package:fixmec/pages/ui/diagnosis.dart';
+import 'package:fixmec/pages/ui/failures.dart';
+import 'package:fixmec/pages/ui/history.dart';
+import 'package:fixmec/pages/ui/inicio.dart';
+import 'package:fixmec/pages/ui/language.dart';
+import 'package:fixmec/pages/ui/settings.dart';
 import 'package:fixmec/services/localization_service.dart';
 import 'package:fixmec/widgets/appbar.dart';
 import 'package:fixmec/widgets/drawerheader.dart';
 import 'package:fixmec/widgets/navigationappbar.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 
 class HomeFixMec extends StatefulWidget {
@@ -34,80 +41,79 @@ class _HomeFixMecState extends State<HomeFixMec> {
   @override
   Widget build(BuildContext context) {
     final loc = Provider.of<LocalizationService>(context);
+
+    //Aqui Van los titulos para el appbar
+    final List<String> titles = [
+      loc.translate("app_name"),
+      loc.translate("chat"),
+      loc.translate("diagnost"),
+      loc.translate("fault2"),
+      loc.translate("history"),
+      loc.translate("configuration"),
+      loc.translate("about"),
+      loc.translate("language"),
+    ];
+
     return Scaffold(
       endDrawer: CustomDrawerheader(
         isDark: widget.isDark,
         onThemeChanged: widget.onThemeChanged,
         currentIndex: _currentIndex,
+        onIndexChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
-      appBar: CustomAppBar(title: loc.translate("app_name")),
+      appBar: CustomAppBar(title: titles[_currentIndex]),
       body: SafeArea(
-        child: Column(
+        child: IndexedStack(
+          index: _currentIndex,
           children: [
-            const SizedBox(height: 20),
-            Text(
-              loc.translate("welcome"),
-              style: const TextStyle(
-                fontFamily: "MiFuente",
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            InicioFixMec(
+              isDark: widget.isDark,
+              onThemeChanged: widget.onThemeChanged,
+              currentIndex: 0,
             ),
-            const SizedBox(height: 12),
-            Text(
-              loc.translate("systemis"),
-              style: const TextStyle(
-                fontFamily: "MiFuente",
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
+            ChatbotFixMec(
+              isDark: widget.isDark,
+              onThemeChanged: widget.onThemeChanged,
+              currentIndex: 1,
             ),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 190.0,
-                viewportFraction: 0.8,
-                enableInfiniteScroll: true,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: true,
-                enlargeFactor: 0.25,
-              ),
-              items: ["assets/motos/apache.png", "assets/motos/evo.png"].map((
-                imgPath,
-              ) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 5.0,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0xFF00B4DB),
-                            blurRadius: 6,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Image.asset(imgPath, fit: BoxFit.contain),
-                        ),
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
+            DiagnosisFixMec(
+              isDark: widget.isDark,
+              onThemeChanged: widget.onThemeChanged,
+              currentIndex: 2,
+            ),
+            FailuresFixMec(
+              isDark: widget.isDark,
+              onThemeChanged: widget.onThemeChanged,
+              currentIndex: 3,
+            ),
+            HistoryFixMec(
+              isDark: widget.isDark,
+              onThemeChanged: widget.onThemeChanged,
+              currentIndex: 4,
+            ),
+            SettingsFixMec(
+              isDark: widget.isDark,
+              onThemeChanged: widget.onThemeChanged,
+              currentIndex: 5,
+              onIndexChanged: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+            ),
+            AboutFixMec(
+              isDark: widget.isDark,
+              onThemeChanged: widget.onThemeChanged,
+              currentIndex: 6,
+            ),
+            LanguageFixMec(
+              isDark: widget.isDark,
+              onThemeChanged: widget.onThemeChanged,
+              currentIndex: 7,
             ),
           ],
         ),
@@ -116,6 +122,11 @@ class _HomeFixMecState extends State<HomeFixMec> {
         currentIndex: _currentIndex,
         isDark: widget.isDark,
         onThemeChanged: widget.onThemeChanged,
+        onIndexChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
     );
   }

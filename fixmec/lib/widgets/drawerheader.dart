@@ -1,8 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fixmec/pages/ui/acerca_de.dart';
-import 'package:fixmec/pages/ui/home.dart';
 import 'package:fixmec/pages/ui/login_page.dart';
-import 'package:fixmec/pages/ui/settings.dart';
 import 'package:fixmec/services/localization_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CustomDrawerheader extends StatefulWidget {
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
+  final ValueChanged<int> onIndexChanged;
   final int currentIndex;
 
   const CustomDrawerheader({
@@ -18,6 +16,7 @@ class CustomDrawerheader extends StatefulWidget {
     required this.isDark,
     required this.onThemeChanged,
     required this.currentIndex,
+    required this.onIndexChanged,
   });
 
   @override
@@ -85,18 +84,7 @@ class _DrawerheaderState extends State<CustomDrawerheader> {
                 loc.translate("start"),
                 style: const TextStyle(color: Colors.white),
               ),
-              onTap: () => {
-                Navigator.pop(context),
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeFixMec(
-                      isDark: widget.isDark,
-                      onThemeChanged: widget.onThemeChanged,
-                    ),
-                  ),
-                ),
-              },
+              onTap: () => {Navigator.pop(context), widget.onIndexChanged(0)},
             ),
             ListTile(
               leading: const Icon(
@@ -107,19 +95,7 @@ class _DrawerheaderState extends State<CustomDrawerheader> {
                 loc.translate("configuration"),
                 style: const TextStyle(color: Colors.white),
               ),
-              onTap: () => {
-                Navigator.pop(context),
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SettingsFixMec(
-                      isDark: widget.isDark,
-                      onThemeChanged: widget.onThemeChanged,
-                      currentIndex: widget.currentIndex,
-                    ),
-                  ),
-                ),
-              },
+              onTap: () => {Navigator.pop(context), widget.onIndexChanged(5)},
             ),
             ListTile(
               leading: const Icon(Icons.info_outlined, color: Colors.white),
@@ -127,19 +103,7 @@ class _DrawerheaderState extends State<CustomDrawerheader> {
                 loc.translate("about"),
                 style: const TextStyle(color: Colors.white),
               ),
-              onTap: () => {
-                Navigator.pop(context),
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AboutFixMec(
-                      isDark: widget.isDark,
-                      onThemeChanged: widget.onThemeChanged,
-                      currentIndex: widget.currentIndex,
-                    ),
-                  ),
-                ),
-              },
+              onTap: () => {Navigator.pop(context), widget.onIndexChanged(6)},
             ),
 
             // inicio cerrar sesión boton

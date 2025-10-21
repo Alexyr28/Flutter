@@ -1,11 +1,8 @@
 import 'package:fixmec/services/localization_service.dart';
-import 'package:fixmec/widgets/appbar.dart';
-import 'package:fixmec/widgets/drawerheader.dart';
-import 'package:fixmec/widgets/navigationappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LanguageFixMec extends StatelessWidget {
+class LanguageFixMec extends StatefulWidget {
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
   final int currentIndex;
@@ -18,16 +15,13 @@ class LanguageFixMec extends StatelessWidget {
   });
 
   @override
+  State<LanguageFixMec> createState() => _LanguageFixMecState();
+}
+
+class _LanguageFixMecState extends State<LanguageFixMec> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: CustomDrawerheader(
-        isDark: isDark,
-        onThemeChanged: onThemeChanged,
-        currentIndex: currentIndex,
-      ),
-      appBar: CustomAppBar(
-        title: Provider.of<LocalizationService>(context).translate("language"),
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -140,11 +134,6 @@ class LanguageFixMec extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: CustomNavAppBar(
-        currentIndex: currentIndex,
-        isDark: isDark,
-        onThemeChanged: onThemeChanged,
       ),
     );
   }

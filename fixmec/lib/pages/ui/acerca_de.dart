@@ -1,9 +1,8 @@
 import 'package:fixmec/services/localization_service.dart';
-import 'package:fixmec/widgets/drawerheader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AboutFixMec extends StatelessWidget {
+class AboutFixMec extends StatefulWidget {
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
   final int currentIndex;
@@ -15,54 +14,13 @@ class AboutFixMec extends StatelessWidget {
   });
 
   @override
+  State<AboutFixMec> createState() => _AboutFixMecState();
+}
+
+class _AboutFixMecState extends State<AboutFixMec> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: CustomDrawerheader(
-        isDark: isDark,
-        onThemeChanged: onThemeChanged,
-        currentIndex: currentIndex,
-      ),
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Image.asset("assets/icons/repair.png", fit: BoxFit.contain),
-        ),
-        title: Text(
-          Provider.of<LocalizationService>(context).translate("about"),
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontFamily: "MiFuente",
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          Builder(
-            builder: (context) {
-              return IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-                icon: const Icon(
-                  Icons.menu_rounded,
-                  color: Colors.white,
-                  size: 40,
-                ),
-              );
-            },
-          ),
-        ],
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomLeft,
-              colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
-            ),
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-      ),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [

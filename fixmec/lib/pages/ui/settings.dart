@@ -1,14 +1,11 @@
-import "package:fixmec/pages/ui/language.dart";
 import "package:fixmec/services/localization_service.dart";
-import "package:fixmec/widgets/appbar.dart";
-import "package:fixmec/widgets/drawerheader.dart";
-import "package:fixmec/widgets/navigationappbar.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 
 class SettingsFixMec extends StatefulWidget {
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
+  final ValueChanged<int> onIndexChanged;
   final int currentIndex;
 
   const SettingsFixMec({
@@ -16,6 +13,7 @@ class SettingsFixMec extends StatefulWidget {
     required this.isDark,
     required this.onThemeChanged,
     required this.currentIndex,
+    required this.onIndexChanged,
   });
 
   @override
@@ -25,13 +23,11 @@ class SettingsFixMec extends StatefulWidget {
 class _SettingsFixMec extends State<SettingsFixMec> {
   bool _isDark = false;
   bool _isnoti = false;
-  late int _currentIndex;
 
   @override
   void initState() {
     super.initState();
     _isDark = widget.isDark;
-    _currentIndex = widget.currentIndex;
   }
 
   @override
@@ -47,16 +43,6 @@ class _SettingsFixMec extends State<SettingsFixMec> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: CustomDrawerheader(
-        isDark: widget.isDark,
-        onThemeChanged: widget.onThemeChanged,
-        currentIndex: _currentIndex,
-      ),
-      appBar: CustomAppBar(
-        title: Provider.of<LocalizationService>(
-          context,
-        ).translate("configuration"),
-      ),
       body: Center(
         child: ListView(
           children: [
@@ -80,16 +66,7 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                   title: "language",
                   icon: Icons.language_rounded,
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LanguageFixMec(
-                          isDark: _isDark,
-                          onThemeChanged: widget.onThemeChanged,
-                          currentIndex: _currentIndex,
-                        ),
-                      ),
-                    );
+                    widget.onIndexChanged(7);
                   },
                 ),
                 _CustomListTile(
@@ -108,11 +85,6 @@ class _SettingsFixMec extends State<SettingsFixMec> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: CustomNavAppBar(
-        currentIndex: _currentIndex,
-        isDark: widget.isDark,
-        onThemeChanged: widget.onThemeChanged,
       ),
     );
   }
