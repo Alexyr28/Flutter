@@ -1,5 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fixmec/services/localization_service.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class FailuresFixMec extends StatefulWidget {
@@ -77,11 +79,17 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/fallas/motor.png', height: 70),
+              Lottie.asset(
+                "assets/animation/Engine Animation.json",
+                height: 100,
+              ),
               const SizedBox(height: 10),
-              Text(
+              AutoSizeText(
                 loc.translate("motorfailures"),
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "MiFuente",
+                ),
               ),
             ],
           ),
@@ -114,11 +122,17 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/fallas/electricas.png', height: 70),
+              Lottie.asset(
+                "assets/animation/Lightning Lottie Animation.json",
+                height: 100,
+              ),
               const SizedBox(height: 10),
-              Text(
-                loc.translate("electricalfailures"),
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              AutoSizeText(
+                'Fallas Electricas',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "MiFuente",
+                ),
               ),
             ],
           ),
@@ -151,11 +165,14 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/fallas/combustibles.png', height: 70),
+              Lottie.asset("assets/animation/Fuel meter.json", height: 100),
               const SizedBox(height: 10),
-              Text(
-                loc.translate("fuelfailures"),
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              AutoSizeText(
+                'Fallas Combustible',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "MiFuente",
+                ),
               ),
             ],
           ),
@@ -188,7 +205,7 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/fallas/fisicas.png', height: 70),
+              Lottie.asset("assets/animation/Engine Animation.json"),
               const SizedBox(height: 10),
               Text(
                 loc.translate("physicalfailures"),
@@ -225,7 +242,7 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/fallas/diagnostico.png', height: 70),
+              Lottie.asset("assets/animation/Engine Animation.json"),
               const SizedBox(height: 10),
               Text(
                 loc.translate("diagnostic_help"),
