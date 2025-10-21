@@ -57,4 +57,57 @@ const Map<String, String> en = {
       "You are an expert mechanic in motorcycle diagnosis and you provide short, concrete answers.",
   "server": "We are having problems with our server, please try again.",
   "motorfailures": "Engine Failures",
+  "electricalfailures": "Electrical Failures",
+  "fuelfailures": "Fuel Failures",
+  "physicalfailures": "Physical Failures",
+  "diagnostic_help": "Diagnostic Help",
+  "close": "Close",
+  "Mfailures_content":
+      "Among the most common engine failures are:\n\n"
+      "• Ignition problems: defective spark plugs or coils.\n"
+      "• Power loss: dirty air or fuel filters.\n"
+      "• Overheating: low coolant levels or radiator issues.\n"
+      "• Unusual noises: worn bearings or loose components.\n"
+      "• Poor fuel efficiency: clogged injectors or carburetor problems.\n\n"
+      "These failures are usually caused by a lack of preventive maintenance,"
+      "prolonged use of the vehicle without inspections, or fuel quality."
+      "Periodic diagnostics are recommended to prevent further damage.",
+  "Efailures_content":
+      "Common electrical failures include:\n\n"
+      "• Battery issues: discharged or faulty battery.\n"
+      "• Lighting problems: blown fuses or faulty bulbs.\n"
+      "• Starter motor failure: worn brushes or solenoid issues.\n"
+      "• Wiring problems: loose connections or damaged cables.\n"
+      "• Sensor malfunctions: faulty oxygen or temperature sensors.\n\n"
+      "These failures can be caused by exposure to moisture, vibrations,"
+      "or poor maintenance. Regular checks of the electrical system are"
+      "recommended to ensure proper functioning.",
+  "Cfailures_Content":
+      "Common fuel system failures include:\n\n"
+      "• Fuel pump failure: clogged or faulty pump.\n"
+      "• Clogged fuel filter: restricts fuel flow to the engine.\n"
+      "• Carburetor issues: dirty or misadjusted carburetor.\n"
+      "• Fuel injector problems: clogged or leaking injectors.\n"
+      "• Contaminated fuel: presence of water or debris in the fuel tank.\n\n"
+      "These failures can be caused by poor fuel quality, lack of maintenance,"
+      "or prolonged use without inspections. Regular cleaning and replacement"
+      "of fuel system components are recommended to ensure optimal performance.",
+  "Pfailures_content":
+      "Common physical failures include:\n\n"
+      "• Tire wear: uneven or excessive tire wear.\n"
+      "• Brake issues: worn brake pads or fluid leaks.\n"
+      "• Suspension problems: worn shocks or misaligned components.\n"
+      "• Frame damage: cracks or bends in the motorcycle frame.\n"
+      "• Chain and sprocket wear: stretched chain or worn sprockets.\n\n"
+      "These failures can be caused by poor maintenance, rough riding conditions,"
+      "or accidents. Regular inspections and timely replacement of worn parts"
+      "are recommended to ensure safety and optimal performance.",
+  "Dfailures_content":
+      "Common diagnostic help includes:\n\n"
+      "• Regularly check fluid levels: oil, coolant, and brake fluid.\n"
+      "• Inspect tires for proper inflation and tread wear.\n"
+      "• Listen for unusual noises during operation.\n"
+      "• Monitor engine performance and fuel efficiency.\n"
+      "• Schedule regular maintenance and inspections with a professional mechanic.\n\n"
+      "These practices can help identify potential issues early and prevent major failures.",
 };

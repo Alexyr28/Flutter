@@ -91,6 +91,7 @@ class _FailuresFixMec extends State<FailuresFixMec> {
   }
 
   Widget _buildFailuresElctronics(BuildContext context) {
+    final loc = Provider.of<LocalizationService>(context);
     return Center(
       child: InkWell(
         borderRadius: BorderRadius.circular(18),
@@ -116,7 +117,7 @@ class _FailuresFixMec extends State<FailuresFixMec> {
               Image.asset('assets/fallas/electricas.png', height: 70),
               const SizedBox(height: 10),
               Text(
-                'Fallas Electricas',
+                loc.translate("electricalfailures"),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
@@ -127,6 +128,7 @@ class _FailuresFixMec extends State<FailuresFixMec> {
   }
 
   Widget _buildFailuresFuel(BuildContext context) {
+    final loc = Provider.of<LocalizationService>(context);
     return Center(
       child: InkWell(
         borderRadius: BorderRadius.circular(18),
@@ -151,8 +153,8 @@ class _FailuresFixMec extends State<FailuresFixMec> {
             children: [
               Image.asset('assets/fallas/combustibles.png', height: 70),
               const SizedBox(height: 10),
-              const Text(
-                'Fallas Combustible',
+              Text(
+                loc.translate("fuelfailures"),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
@@ -163,6 +165,7 @@ class _FailuresFixMec extends State<FailuresFixMec> {
   }
 
   Widget _buildFailuresPhysical(BuildContext context) {
+    final loc = Provider.of<LocalizationService>(context);
     return Center(
       child: InkWell(
         borderRadius: BorderRadius.circular(18),
@@ -187,8 +190,8 @@ class _FailuresFixMec extends State<FailuresFixMec> {
             children: [
               Image.asset('assets/fallas/fisicas.png', height: 70),
               const SizedBox(height: 10),
-              const Text(
-                'Fallas Fisicas',
+              Text(
+                loc.translate("physicalfailures"),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
@@ -199,6 +202,7 @@ class _FailuresFixMec extends State<FailuresFixMec> {
   }
 
   Widget _buildFailuresDiagnosis(BuildContext context) {
+    final loc = Provider.of<LocalizationService>(context);
     return Center(
       child: InkWell(
         borderRadius: BorderRadius.circular(18),
@@ -223,8 +227,8 @@ class _FailuresFixMec extends State<FailuresFixMec> {
             children: [
               Image.asset('assets/fallas/diagnostico.png', height: 70),
               const SizedBox(height: 10),
-              const Text(
-                'Diagnostico ',
+              Text(
+                loc.translate("diagnostic_help"),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
@@ -236,29 +240,20 @@ class _FailuresFixMec extends State<FailuresFixMec> {
 
   //informaciom de fallas
   void _showFailureDialogMotor(BuildContext context) {
+    final loc = Provider.of<LocalizationService>(context, listen: false);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text(
-          'Fallas del Motor',
+        title: Text(
+          loc.translate("motorfailures"),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        content: const Text(
-          'Entre las fallas más comunes de un motor se encuentran:\n\n'
-          '• Problemas de encendido: bujías o bobinas defectuosas.\n'
-          '• Pérdida de potencia: filtros de aire o combustible sucios.\n'
-          '• Sobrecalentamiento: fallas en el sistema de refrigeración.\n'
-          '• Consumo excesivo de aceite o combustible.\n'
-          '• Ruidos inusuales: desgaste en válvulas o cojinetes.\n\n'
-          'Estas fallas suelen ser causadas por falta de mantenimiento preventivo, '
-          'uso prolongado del vehículo sin revisiones o la calidad del combustible. '
-          'Se recomienda realizar diagnósticos periódicos para evitar daños mayores.',
-        ),
+        content: Text(loc.translate("Mfailures_content")),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cerrar'),
+            child: Text(loc.translate("close")),
           ),
         ],
       ),
@@ -267,29 +262,20 @@ class _FailuresFixMec extends State<FailuresFixMec> {
 
   //electricas
   void _showFailureDialogElectricas(BuildContext context) {
+    final loc = Provider.of<LocalizationService>(context, listen: false);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text(
-          'Fallas del Motor',
+        title: Text(
+          loc.translate("electricalfailures"),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        content: const Text(
-          'Entre las fallas eléctricas más comunes se encuentran:\n\n'
-          '• Batería descargada o en mal estado.\n'
-          '• Alternador defectuoso o que no carga correctamente.\n'
-          '• Cortocircuitos o cables sulfatados.\n'
-          '• Fusibles quemados o relés dañados.\n'
-          '• Fallas en sensores o módulos electrónicos.\n\n'
-          'Estas fallas pueden provocar encendido irregular, pérdida de funciones '
-          'electrónicas o fallos en la inyección del motor. '
-          'Es importante revisar el sistema eléctrico y la batería de forma periódica.',
-        ),
+        content: Text(loc.translate("Efailures_content")),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cerrar'),
+            child: Text(loc.translate("close")),
           ),
         ],
       ),
@@ -298,28 +284,20 @@ class _FailuresFixMec extends State<FailuresFixMec> {
 
   //fuil
   void _showFailureDialogCombustible(BuildContext context) {
+    final loc = Provider.of<LocalizationService>(context, listen: false);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text(
-          'Fallas del Motor',
+        title: Text(
+          loc.translate("fuelfailures"),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        content: const Text(
-          'Entre las fallas más comunes en el sistema de combustible se encuentran:\n\n'
-          '• Bomba de combustible defectuosa o con baja presión.\n'
-          '• Inyectores sucios o dañados.\n'
-          '• Filtros de combustible obstruidos.\n'
-          '• Fugas en líneas o conexiones del sistema.\n'
-          '• Uso de combustible de baja calidad.\n\n'
-          'Estos problemas pueden causar dificultad para arrancar, pérdida de potencia '
-          'o un consumo excesivo. Se recomienda limpiar los inyectores y cambiar el filtro periódicamente.',
-        ),
+        content: Text(loc.translate("Cfailures_Content")),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cerrar'),
+            child: Text(loc.translate("close")),
           ),
         ],
       ),
@@ -328,28 +306,20 @@ class _FailuresFixMec extends State<FailuresFixMec> {
 
   //pyhsical
   void _showFailureDialogFisicas(BuildContext context) {
+    final loc = Provider.of<LocalizationService>(context, listen: false);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text(
-          'Fallas del Motor',
+        title: Text(
+          loc.translate("physicalfailures"),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        content: const Text(
-          'Las fallas físicas más comunes en una motocicleta o vehículo incluyen:\n\n'
-          '• Pérdida de tornillos, tuercas o pernos por vibración.\n'
-          '• Rotura o desgaste de partes plásticas o metálicas.\n'
-          '• Problemas en la suspensión o chasis.\n'
-          '• Desgaste irregular en las llantas o frenos.\n'
-          '• Golpes o deformaciones por caídas o choques leves.\n\n'
-          'Estas fallas suelen afectar la seguridad y estabilidad del vehículo. '
-          'Es recomendable hacer inspecciones visuales frecuentes y mantenimiento preventivo.',
-        ),
+        content: Text(loc.translate("Pfailures_content")),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cerrar'),
+            child: Text(loc.translate("close")),
           ),
         ],
       ),
@@ -358,28 +328,20 @@ class _FailuresFixMec extends State<FailuresFixMec> {
 
   //detalladas
   void _showFailureDialogDetalladas(BuildContext context) {
+    final loc = Provider.of<LocalizationService>(context, listen: false);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text(
-          'Fallas del Motor',
+        title: Text(
+          loc.translate("diagnostic_help"),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        content: const Text(
-          'El diagnóstico detallado permite analizar de forma precisa el estado del vehículo:\n\n'
-          '• Escaneo de códigos de error del sistema electrónico.\n'
-          '• Revisión de sensores, actuadores y sistemas de inyección.\n'
-          '• Evaluación del rendimiento del motor y consumo.\n'
-          '• Análisis de vibraciones, ruidos o fugas.\n'
-          '• Generación de reportes para mantenimiento preventivo.\n\n'
-          'Un diagnóstico detallado ayuda a identificar fallas ocultas antes de que se conviertan '
-          'en reparaciones costosas y mejora la eficiencia del vehículo.',
-        ),
+        content: Text(loc.translate("Dfailures_content")),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cerrar'),
+            child: Text(loc.translate("close")),
           ),
         ],
       ),
