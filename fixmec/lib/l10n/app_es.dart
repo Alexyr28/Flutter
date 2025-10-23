@@ -108,4 +108,13 @@ const Map<String, String> es = {
       "• Problemas eléctricos complejos: fallas intermitentes en el sistema eléctrico que requieren diagnóstico especializado.\n"
       "Estas fallas suelen ser causadas por una combinación de factores, incluyendo desgaste, falta de mantenimiento y condiciones de conducción adversas. "
       "Se recomienda realizar diagnósticos detallados y mantenimiento preventivo para abordar estas fallas de manera efectiva.",
+  "alerts": "Alertas",
+  "oil": "Aceite",
+  "leveloil": "Nivel de Aceite",
+  "tires": "Llantas",
+  "checktires": "Revisar desgaste",
+  "brakes": "Frenos",
+  "checkbrakes": "Verificar pastillas",
+  "chain": "Cadena",
+  "checkchain": "Limpieza y tensión",
 };

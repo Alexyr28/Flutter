@@ -110,4 +110,13 @@ const Map<String, String> en = {
       "• Monitor engine performance and fuel efficiency.\n"
       "• Schedule regular maintenance and inspections with a professional mechanic.\n\n"
       "These practices can help identify potential issues early and prevent major failures.",
+  "alerts": "Alerts",
+  "oil": "Oil",
+  "leveloil": "Oil Level",
+  "tires": "Tires",
+  "checktires": "Check wear",
+  "brakes": "Brakes",
+  "checkbrakes": "Check pills",
+  "chain": "Chain",
+  "checkchain": "Cleaning and tension",
 };

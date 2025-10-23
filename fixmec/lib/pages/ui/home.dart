@@ -45,7 +45,7 @@ class _HomeFixMecState extends State<HomeFixMec> {
     //Aqui Van los titulos para el appbar
     final List<String> titles = [
       loc.translate("app_name"),
-      loc.translate("chat"),
+      loc.translate("chatb"),
       loc.translate("diagnost"),
       loc.translate("fault2"),
       loc.translate("history"),
@@ -66,57 +66,55 @@ class _HomeFixMecState extends State<HomeFixMec> {
         },
       ),
       appBar: CustomAppBar(title: titles[_currentIndex]),
-      body: SafeArea(
-        child: IndexedStack(
-          index: _currentIndex,
-          children: [
-            InicioFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 0,
-            ),
-            ChatbotFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 1,
-            ),
-            DiagnosisFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 2,
-            ),
-            FailuresFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 3,
-            ),
-            HistoryFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 4,
-            ),
-            SettingsFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 5,
-              onIndexChanged: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-            ),
-            AboutFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 6,
-            ),
-            LanguageFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 7,
-            ),
-          ],
-        ),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          InicioFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 0,
+          ),
+          ChatbotFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 1,
+          ),
+          DiagnosisFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 2,
+          ),
+          FailuresFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 3,
+          ),
+          HistoryFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 4,
+          ),
+          SettingsFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 5,
+            onIndexChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+          ),
+          AboutFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 6,
+          ),
+          LanguageFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 7,
+          ),
+        ],
       ),
       bottomNavigationBar: CustomNavAppBar(
         currentIndex: _currentIndex,
