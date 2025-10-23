@@ -23,6 +23,7 @@ class PercentFixMec extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Padding(padding: EdgeInsets.all(2.0)),
           CircularPercentIndicator(
             radius: 27.0,
             lineWidth: 4,
@@ -30,8 +31,8 @@ class PercentFixMec extends StatelessWidget {
             center: Image.asset(
               image,
               color: primaryLightBlue,
-              width: 25,
-              height: 25,
+              width: 35,
+              height: 35,
               fit: BoxFit.contain,
             ),
             progressColor: primaryLightBlue,
