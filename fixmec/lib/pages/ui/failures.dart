@@ -276,13 +276,22 @@ class _FailuresFixMec extends State<FailuresFixMec> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           loc.translate("motorfailures"),
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
         ),
-        content: Text(loc.translate("Mfailures_content")),
+        content: Text(
+          loc.translate("Mfailures_content"),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(loc.translate("close")),
+            child: Text(
+              loc.translate("close"),
+              style: TextStyle(
+                fontFamily: "MiFuente",
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),
@@ -298,13 +307,22 @@ class _FailuresFixMec extends State<FailuresFixMec> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           loc.translate("electricalfailures"),
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
         ),
-        content: Text(loc.translate("Efailures_content")),
+        content: Text(
+          loc.translate("Efailures_content"),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(loc.translate("close")),
+            child: Text(
+              loc.translate("close"),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: "MiFuente",
+              ),
+            ),
           ),
         ],
       ),
@@ -320,13 +338,22 @@ class _FailuresFixMec extends State<FailuresFixMec> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           loc.translate("fuelfailures"),
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
         ),
-        content: Text(loc.translate("Cfailures_Content")),
+        content: Text(
+          loc.translate("Cfailures_Content"),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(loc.translate("close")),
+            child: Text(
+              loc.translate("close"),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: "MiFuente",
+              ),
+            ),
           ),
         ],
       ),
@@ -342,13 +369,22 @@ class _FailuresFixMec extends State<FailuresFixMec> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           loc.translate("physicalfailures"),
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
         ),
-        content: Text(loc.translate("Pfailures_content")),
+        content: Text(
+          loc.translate("Pfailures_content"),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(loc.translate("close")),
+            child: Text(
+              loc.translate("close"),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: "MiFuente",
+              ),
+            ),
           ),
         ],
       ),
@@ -364,13 +400,22 @@ class _FailuresFixMec extends State<FailuresFixMec> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           loc.translate("diagnostic_help"),
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
         ),
-        content: Text(loc.translate("Dfailures_content")),
+        content: Text(
+          loc.translate("Dfailures_content"),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(loc.translate("close")),
+            child: Text(
+              loc.translate("close"),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: "MiFuente",
+              ),
+            ),
           ),
         ],
       ),
