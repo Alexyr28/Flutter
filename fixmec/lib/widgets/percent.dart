@@ -31,8 +31,8 @@ class PercentFixMec extends StatelessWidget {
             center: Image.asset(
               image,
               color: primaryLightBlue,
-              width: 35,
-              height: 35,
+              width: 28,
+              height: 28,
               fit: BoxFit.contain,
             ),
             progressColor: primaryLightBlue,

@@ -51,6 +51,7 @@ dependencies:
   flutter_markdown: ^0.6.17
   markdown_widget: ^2.3.2
   percent_indicator: ^4.2.5
+  animated_text_kit: ^4.3.0
 
 
 dev_dependencies:

@@ -119,4 +119,5 @@ const Map<String, String> en = {
   "checkbrakes": "Check pills",
   "chain": "Chain",
   "checkchain": "Cleaning and tension",
+  "yourmoto": "For Your Motorcycle",
 };

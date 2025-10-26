@@ -278,9 +278,15 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           loc.translate("motorfailures"),
           style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
         ),
-        content: Text(
-          loc.translate("Mfailures_content"),
-          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
+        content: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+          child: Text(
+            loc.translate("Mfailures_content"),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: "MiFuente",
+            ),
+          ),
         ),
         actions: [
           TextButton(
@@ -309,9 +315,15 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           loc.translate("electricalfailures"),
           style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
         ),
-        content: Text(
-          loc.translate("Efailures_content"),
-          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
+        content: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+          child: Text(
+            loc.translate("Efailures_content"),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: "MiFuente",
+            ),
+          ),
         ),
         actions: [
           TextButton(
@@ -340,9 +352,15 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           loc.translate("fuelfailures"),
           style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
         ),
-        content: Text(
-          loc.translate("Cfailures_Content"),
-          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
+        content: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+          child: Text(
+            loc.translate("Cfailures_Content"),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: "MiFuente",
+            ),
+          ),
         ),
         actions: [
           TextButton(
@@ -371,9 +389,15 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           loc.translate("physicalfailures"),
           style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
         ),
-        content: Text(
-          loc.translate("Pfailures_content"),
-          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
+        content: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+          child: Text(
+            loc.translate("Pfailures_content"),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: "MiFuente",
+            ),
+          ),
         ),
         actions: [
           TextButton(
@@ -402,9 +426,15 @@ class _FailuresFixMec extends State<FailuresFixMec> {
           loc.translate("diagnostic_help"),
           style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
         ),
-        content: Text(
-          loc.translate("Dfailures_content"),
-          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "MiFuente"),
+        content: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+          child: Text(
+            loc.translate("Dfailures_content"),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: "MiFuente",
+            ),
+          ),
         ),
         actions: [
           TextButton(

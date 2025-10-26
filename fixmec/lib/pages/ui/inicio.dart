@@ -28,7 +28,6 @@ class _InicioFixMec extends State<InicioFixMec> {
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
       child: Column(
         children: [
-          const SizedBox(height: 20),
           AutoSizeText(
             loc.translate("welcome"),
             style: const TextStyle(

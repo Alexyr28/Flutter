@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:fixmec/pages/ui/home.dart';
 import 'package:fixmec/pages/ui/login_page.dart';
 import 'package:fixmec/services/localization_service.dart';
@@ -134,20 +134,49 @@ class _SplashScreenFixMecState extends State<SplashScreenFixMec>
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                    child: AutoSizeText(
-                      localization.translate("diagnosis"),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontFamily: "MiFuente",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                        decoration: TextDecoration.none,
+                    child: SizedBox(
+                      height: 30,
+                      child: AnimatedTextKit(
+                        animatedTexts: [
+                          RotateAnimatedText(
+                            localization.translate("diag"),
+                            textAlign: TextAlign.center,
+                            textStyle: TextStyle(
+                              fontSize: 18,
+                              fontFamily: "MiFuente",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                          RotateAnimatedText(
+                            localization.translate("yourmoto"),
+                            textAlign: TextAlign.center,
+                            textStyle: TextStyle(
+                              fontSize: 18,
+                              fontFamily: "MiFuente",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        ],
                       ),
-                      minFontSize: 12,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
+                    // child: AutoSizeText(
+                    //   localization.translate("diagnosis"),
+                    //   textAlign: TextAlign.center,
+                    //   style: const TextStyle(
+                    //     fontSize: 18,
+                    //     fontFamily: "MiFuente",
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.black87,
+                    //     decoration: TextDecoration.none,
+                    //   ),
+                    //   minFontSize: 12,
+                    //   maxLines: 2,
+                    //   overflow: TextOverflow.ellipsis,
+                    // ),
                   ),
                 ],
               ),
