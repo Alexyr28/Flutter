@@ -42,7 +42,7 @@ class _HomeFixMecState extends State<HomeFixMec> {
   Widget build(BuildContext context) {
     final loc = Provider.of<LocalizationService>(context);
 
-    //Aqui Van los titulos para el appbar
+    // 📌 Títulos para cada pestaña
     final List<String> titles = [
       loc.translate("app_name"),
       loc.translate("chatb"),
@@ -69,31 +69,37 @@ class _HomeFixMecState extends State<HomeFixMec> {
       body: IndexedStack(
         index: _currentIndex,
         children: [
+          // 0️⃣ Inicio
           InicioFixMec(
             isDark: widget.isDark,
             onThemeChanged: widget.onThemeChanged,
             currentIndex: 0,
           ),
+
+          // 1️⃣ Chatbot
           ChatbotFixMec(
             isDark: widget.isDark,
             onThemeChanged: widget.onThemeChanged,
             currentIndex: 1,
           ),
+
+          // 2️⃣ Diagnóstico
           DiagnosisFixMec(
             isDark: widget.isDark,
             onThemeChanged: widget.onThemeChanged,
             currentIndex: 2,
           ),
+
+          // 3️⃣ Fallas
           FailuresFixMec(
             isDark: widget.isDark,
             onThemeChanged: widget.onThemeChanged,
             currentIndex: 3,
           ),
-          HistoryFixMec(
-            isDark: widget.isDark,
-            onThemeChanged: widget.onThemeChanged,
-            currentIndex: 4,
-          ),
+
+          // 4️⃣ 🔥 HISTORIAL (modificado para usar el nuevo con Firestore)
+          const ChatHistoryPage(), // ✅ Reemplazo de HistoryFixMec por el nuevo historial
+          // 5️⃣ Configuración
           SettingsFixMec(
             isDark: widget.isDark,
             onThemeChanged: widget.onThemeChanged,
@@ -104,11 +110,15 @@ class _HomeFixMecState extends State<HomeFixMec> {
               });
             },
           ),
+
+          // 6️⃣ Acerca de
           AboutFixMec(
             isDark: widget.isDark,
             onThemeChanged: widget.onThemeChanged,
             currentIndex: 6,
           ),
+
+          // 7️⃣ Idioma
           LanguageFixMec(
             isDark: widget.isDark,
             onThemeChanged: widget.onThemeChanged,
@@ -116,6 +126,8 @@ class _HomeFixMecState extends State<HomeFixMec> {
           ),
         ],
       ),
+
+      // 🔹 Barra inferior
       bottomNavigationBar: CustomNavAppBar(
         currentIndex: _currentIndex,
         isDark: widget.isDark,

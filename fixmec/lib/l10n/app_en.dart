@@ -120,4 +120,8 @@ const Map<String, String> en = {
   "chain": "Chain",
   "checkchain": "Cleaning and tension",
   "yourmoto": "For Your Motorcycle",
+  "history_chats": "Chat History",
+  "chat_deleted": "Chat deleted",
+  "chat_without_titles": "Chat without title",
+  "there_are_no_chats_yet": "There are no chats yet",
 };
