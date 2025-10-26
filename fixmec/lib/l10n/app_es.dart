@@ -117,4 +117,5 @@ const Map<String, String> es = {
   "checkbrakes": "Verificar pastillas",
   "chain": "Cadena",
   "checkchain": "Limpieza y tensión",
+  "history_chats": "Historial de Chats",
 };
