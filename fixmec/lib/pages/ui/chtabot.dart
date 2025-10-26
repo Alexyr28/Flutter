@@ -11,7 +11,7 @@ class ChatbotFixMec extends StatefulWidget {
   final int currentIndex;
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
-  final String? chatId; // <- añadido para abrir un chat existente
+  final String? chatId; // id de los chats existentes
 
   const ChatbotFixMec({
     super.key,
@@ -40,7 +40,7 @@ class _ChatbotFixMecState extends State<ChatbotFixMec> {
     }
   }
 
-  // Cargar mensajes desde Firestore si ya existe el chat
+  // si hay chats, cargarlos desde firebase (buscar por chatId)
   Future<void> _loadMessages() async {
     final snapshot = await FirebaseFirestore.instance
         .collection('chats')
@@ -73,7 +73,7 @@ class _ChatbotFixMecState extends State<ChatbotFixMec> {
       _chatId = newChat.id;
     }
 
-    // Guardar mensaje del usuario
+    // Guardar lo que se consulto del usuario
     await FirebaseFirestore.instance
         .collection('chats')
         .doc(_chatId)
