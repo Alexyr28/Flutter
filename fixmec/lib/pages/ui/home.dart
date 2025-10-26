@@ -42,10 +42,10 @@ class _HomeFixMecState extends State<HomeFixMec> {
   Widget build(BuildContext context) {
     final loc = Provider.of<LocalizationService>(context);
 
-    //Aqui Van los titulos para el appbar
+    // 📌 Títulos para cada pestaña
     final List<String> titles = [
       loc.translate("app_name"),
-      loc.translate("chat"),
+      loc.translate("chatb"),
       loc.translate("diagnost"),
       loc.translate("fault2"),
       loc.translate("history"),
@@ -66,58 +66,68 @@ class _HomeFixMecState extends State<HomeFixMec> {
         },
       ),
       appBar: CustomAppBar(title: titles[_currentIndex]),
-      body: SafeArea(
-        child: IndexedStack(
-          index: _currentIndex,
-          children: [
-            InicioFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 0,
-            ),
-            ChatbotFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 1,
-            ),
-            DiagnosisFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 2,
-            ),
-            FailuresFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 3,
-            ),
-            HistoryFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 4,
-            ),
-            SettingsFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 5,
-              onIndexChanged: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-            ),
-            AboutFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 6,
-            ),
-            LanguageFixMec(
-              isDark: widget.isDark,
-              onThemeChanged: widget.onThemeChanged,
-              currentIndex: 7,
-            ),
-          ],
-        ),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          // 0️⃣ Inicio
+          InicioFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 0,
+          ),
+
+          // 1️⃣ Chatbot
+          ChatbotFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 1,
+          ),
+
+          // 2️⃣ Diagnóstico
+          DiagnosisFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 2,
+          ),
+
+          // 3️⃣ Fallas
+          FailuresFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 3,
+          ),
+
+          // 4️⃣ 🔥 HISTORIAL (modificado para usar el nuevo con Firestore)
+          const ChatHistoryPage(), // ✅ Reemplazo de HistoryFixMec por el nuevo historial
+          // 5️⃣ Configuración
+          SettingsFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 5,
+            onIndexChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+          ),
+
+          // 6️⃣ Acerca de
+          AboutFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 6,
+          ),
+
+          // 7️⃣ Idioma
+          LanguageFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 7,
+          ),
+        ],
       ),
+
+      // 🔹 Barra inferior
       bottomNavigationBar: CustomNavAppBar(
         currentIndex: _currentIndex,
         isDark: widget.isDark,
