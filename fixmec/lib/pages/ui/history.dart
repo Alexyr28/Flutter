@@ -30,14 +30,15 @@ class ChatHistoryPage extends StatelessWidget {
           final chats = snapshot.data!.docs;
 
           if (chats.isEmpty) {
-            return const Center(child: Text("Aún no hay chats"));
+            return Center(child: Text(loc.translate('there_are_no_chats_yet')));
           }
 
           return ListView.builder(
             itemCount: chats.length,
             itemBuilder: (context, index) {
               final chat = chats[index];
-              final title = chat['title'] ?? "Chat sin título";
+              final title =
+                  chat['title'] ?? loc.translate('chat_without_titles');
               final date = (chat['createdAt'] as Timestamp?)?.toDate();
 
               return Dismissible(
@@ -62,7 +63,7 @@ class ChatHistoryPage extends StatelessWidget {
 
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Chat eliminado')),
+                      SnackBar(content: Text(loc.translate('chat_deleted'))),
                     );
                   }
                 },

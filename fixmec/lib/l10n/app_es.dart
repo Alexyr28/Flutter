@@ -118,4 +118,7 @@ const Map<String, String> es = {
   "chain": "Cadena",
   "checkchain": "Limpieza y tensión",
   "history_chats": "Historial de Chats",
+  "chat_deleted": "Chat eliminado",
+  "chat_without_titles": "Chat sin título",
+  "there_are_no_chats_yet": "Aún no hay chats",
 };
