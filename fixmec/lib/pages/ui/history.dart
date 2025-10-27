@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixmec/services/localization_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'chtabot.dart';
 
 class ChatHistoryPage extends StatelessWidget {
   const ChatHistoryPage({super.key});
@@ -14,7 +13,6 @@ class ChatHistoryPage extends StatelessWidget {
     final loc = Provider.of<LocalizationService>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(loc.translate('history_chats'))),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('chats')
@@ -74,20 +72,6 @@ class ChatHistoryPage extends StatelessWidget {
                         ? "${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}"
                         : "Sin fecha",
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ChatbotFixMec(
-                          chatId: chat.id,
-                          currentIndex: 1,
-                          isDark: false,
-                          onThemeChanged: (_) {},
-                        ),
-                      ),
-                    );
-                  },
                 ),
               );
             },

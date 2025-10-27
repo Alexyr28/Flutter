@@ -122,4 +122,6 @@ const Map<String, String> es = {
   "chat_deleted": "Chat eliminado",
   "chat_without_titles": "Chat sin título",
   "there_are_no_chats_yet": "Aún no hay chats",
+  "light": "Luces",
+  "checklight": "Verificar faros y stops",
 };
