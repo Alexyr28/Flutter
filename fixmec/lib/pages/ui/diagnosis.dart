@@ -1,4 +1,8 @@
+import 'package:fixmec/models/message.dart';
 import 'package:flutter/material.dart';
+import 'package:fixmec/services/api_service.dart';
+// import 'package:fixmec/widgets/appbar.dart';
+// import 'package:fixmec/models/message.dart';
 
 class DiagnosisFixMec extends StatefulWidget {
   final int currentIndex;
@@ -16,8 +20,165 @@ class DiagnosisFixMec extends StatefulWidget {
 }
 
 class _DiagnosisFixMec extends State<DiagnosisFixMec> {
+  final List<Message> messages = [];
+  List<String> options = [];
+  final ScrollController scrollController = ScrollController();
+  bool loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    loadInitial();
+  }
+
+  // Con esta funcion obtenemos el mensaje inicial que traemos del APIService
+  // Para luego indicar las opciones que el usuario puede seleccionar
+  Future<void> loadInitial() async {
+    setState(() => loading = true);
+    final data = await ApiService.getInitial();
+    setState(() {
+      messages.add(Message(text: data['text'], isUser: false));
+      options = List<String>.from(data['options'] ?? []);
+      loading = false;
+      scrollToBottom();
+    });
+  }
+
+  // Esta funcion se ejecuta cuando el usuario selecciona una de las opciones
+  Future<void> onOptionSelected(String option) async {
+    // Añadimos la respuesta del usuario
+    setState(() {
+      messages.add(Message(text: option, isUser: true));
+      options = [];
+      loading = true;
+      scrollToBottom();
+    });
+
+    // Llamamos al servicio API para enviar la respuesta del usuario
+    final data = await ApiService.sendAnswer(option);
+
+    setState(() {
+      if (data['type'] == 'question') {
+        messages.add(Message(text: data['text'], isUser: false));
+        options = List<String>.from(data['options'] ?? []);
+      } else if (data['type'] == 'diagnosis') {
+        messages.add(Message(text: data['text'], isUser: false));
+        options = [];
+      } else {
+        messages.add(
+          Message(text: 'Error: Tipo de respuesta desconocido.', isUser: false),
+        );
+      }
+      loading = false;
+      scrollToBottom();
+    });
+  }
+
+  // Esta funcion es el scroll automatico hacia el final de la lista de mensajes
+  Future<void> scrollToBottom() async {
+    Future.delayed(const Duration(seconds: 1), () {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(seconds: 3),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+
+  Widget buildMessageBubble(Message msg) {
+    // Determina la alineacion del mensaje. Si es del usuario a la derecha, si no a la izquierda
+    final alignment = msg.isUser ? Alignment.centerRight : Alignment.centerLeft;
+    // Detrminar el color de la burbuja del mensaje
+    final color = msg.isUser ? Colors.blueAccent : Colors.grey.shade300;
+    // Determinar el color del texto
+    final textColor = msg.isUser ? Colors.white : Colors.black87;
+    // El radio de las esquinas de la burbuja
+    final radius = BorderRadius.circular(12);
+
+    return Align(
+      alignment: alignment,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+        padding: const EdgeInsets.all(12),
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.7,
+        ),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: msg.isUser
+              ? radius.subtract(
+                  const BorderRadius.only(bottomRight: Radius.circular(12)),
+                )
+              : radius.subtract(
+                  const BorderRadius.only(bottomLeft: Radius.circular(12)),
+                ),
+        ),
+        child: Text(msg.text, style: TextStyle(color: textColor)),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                controller: scrollController,
+                itemCount: messages.length,
+                padding: const EdgeInsets.only(top: 12, bottom: 12),
+                itemBuilder: (context, index) =>
+                    buildMessageBubble(messages[index]),
+              ),
+            ),
+
+            if (loading)
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+
+            //Opciones dinamicas
+            if (options.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  alignment: WrapAlignment.center,
+                  children: options.map((opt) {
+                    return ElevatedButton(
+                      onPressed: () => onOptionSelected(opt),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepOrangeAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 16,
+                        ),
+                      ),
+                      child: Text(opt),
+                    );
+                  }).toList(),
+                ),
+              ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
   }
 }
