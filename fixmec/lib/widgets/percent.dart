@@ -61,18 +61,20 @@ class PercentFixMec extends StatelessWidget {
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  AnimatedTextKit(
-                    key: UniqueKey(),
-                    animatedTexts: [
-                      TypewriterAnimatedText(
-                        subtitle,
-                        textStyle: TextStyle(
-                          fontFamily: "MiFuente",
-                          fontSize: 12,
+                  Flexible(
+                    child: AnimatedTextKit(
+                      key: UniqueKey(),
+                      animatedTexts: [
+                        TypewriterAnimatedText(
+                          subtitle,
+                          textStyle: TextStyle(
+                            fontFamily: "MiFuente",
+                            fontSize: 12,
+                          ),
                         ),
-                      ),
-                    ],
-                    isRepeatingAnimation: true,
+                      ],
+                      isRepeatingAnimation: true,
+                    ),
                   ),
                 ],
               ),
