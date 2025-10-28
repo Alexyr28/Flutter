@@ -3,18 +3,30 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixmec/services/localization_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'chtabot.dart';
 
-class ChatHistoryPage extends StatelessWidget {
-  const ChatHistoryPage({super.key});
+class ChatHistoryPage extends StatefulWidget {
+  final ValueChanged<int> onIndexChanged;
+  final int currentIndex;
+  final ValueChanged<String>? onChatSelected;
 
+  const ChatHistoryPage({
+    super.key,
+    required this.currentIndex,
+    required this.onIndexChanged,
+    this.onChatSelected,
+  });
+
+  @override
+  State<ChatHistoryPage> createState() => _ChatHistoryPageState();
+}
+
+class _ChatHistoryPageState extends State<ChatHistoryPage> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     final loc = Provider.of<LocalizationService>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(loc.translate('history_chats'))),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('chats')
@@ -68,25 +80,30 @@ class ChatHistoryPage extends StatelessWidget {
                   }
                 },
                 child: ListTile(
-                  title: Text(title),
+                  title: Text(
+                    title,
+                    style: TextStyle(
+                      fontFamily: "MiFuente",
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                   subtitle: Text(
                     date != null
                         ? "${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}"
                         : "Sin fecha",
+                    style: TextStyle(
+                      fontFamily: "MiFuente",
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ChatbotFixMec(
-                          chatId: chat.id,
-                          currentIndex: 1,
-                          isDark: false,
-                          onThemeChanged: (_) {},
-                        ),
-                      ),
-                    );
+                  trailing: Icon(Icons.arrow_forward_ios_outlined, size: 16),
+                  //Moverse a la pagina del chat y pasar el ID
+                  onTap: () => {
+                    if (widget.onChatSelected != null)
+                      {widget.onChatSelected!(chat.id)},
+                    widget.onIndexChanged(1),
                   },
                 ),
               );

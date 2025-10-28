@@ -164,7 +164,7 @@ class _DiagnosisFixMec extends State<DiagnosisFixMec> {
                       onPressed: () => onOptionSelected(opt),
                       style: ElevatedButton.styleFrom(
                         textStyle: TextStyle(color: Colors.white),
-                        backgroundColor: const Color(0xFF00B4DB),
+                        backgroundColor: Color(0xFF00B4DB),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),

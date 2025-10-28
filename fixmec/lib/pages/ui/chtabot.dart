@@ -32,10 +32,27 @@ class _ChatbotFixMecState extends State<ChatbotFixMec> {
   String? _chatId;
 
   @override
+  void didUpdateWidget(covariant ChatbotFixMec oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    //Si se cambia el chatID, se recargarán los mensajes
+    if (widget.chatId != oldWidget.chatId) {
+      setState(() {
+        _chatId = widget.chatId;
+        _message.clear();
+      });
+
+      if (_chatId != null) {
+        _loadMessages();
+      }
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
-    _chatId = widget.chatId;
-    if (_chatId != null) {
+    if (widget.chatId != null) {
+      _chatId = widget.chatId;
       _loadMessages();
     }
   }

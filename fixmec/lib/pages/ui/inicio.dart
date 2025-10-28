@@ -114,31 +114,72 @@ class _InicioFixMec extends State<InicioFixMec> {
             crossAxisSpacing: 12,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: 2.3,
+            childAspectRatio: 2.0,
             children: [
               PercentFixMec(
                 title: loc.translate("oil"),
                 image: "assets/icons/oil.png",
                 subtitle: loc.translate("leveloil"),
                 progress: 0.28,
+                onTap: () {
+                  showDatePicker(
+                    context: context,
+                    firstDate: DateTime(2018),
+                    lastDate: DateTime.now(),
+                  );
+                },
               ),
               PercentFixMec(
                 title: loc.translate("tires"),
                 image: "assets/icons/racing.png",
                 subtitle: loc.translate("checktires"),
                 progress: 0.56,
+                onTap: () {
+                  showDatePicker(
+                    context: context,
+                    firstDate: DateTime(2018),
+                    lastDate: DateTime.now(),
+                  );
+                },
               ),
               PercentFixMec(
                 title: loc.translate("brakes"),
                 image: "assets/icons/disc-brake.png",
                 subtitle: loc.translate("checkbrakes"),
                 progress: 0.9,
+                onTap: () {
+                  showDatePicker(
+                    context: context,
+                    firstDate: DateTime(2018),
+                    lastDate: DateTime.now(),
+                  );
+                },
               ),
               PercentFixMec(
                 title: loc.translate("chain"),
                 image: "assets/icons/chain.png",
                 subtitle: loc.translate("checkchain"),
                 progress: 0.67,
+                onTap: () {
+                  showDatePicker(
+                    context: context,
+                    firstDate: DateTime(2018),
+                    lastDate: DateTime.now(),
+                  );
+                },
+              ),
+              PercentFixMec(
+                title: loc.translate("light"),
+                image: "assets/icons/puzzle.png",
+                subtitle: loc.translate("checklight"),
+                progress: 0.02,
+                onTap: () {
+                  showDatePicker(
+                    context: context,
+                    firstDate: DateTime(2018),
+                    lastDate: DateTime.now(),
+                  );
+                },
               ),
             ],
           ),

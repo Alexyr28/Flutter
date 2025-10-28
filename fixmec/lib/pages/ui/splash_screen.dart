@@ -118,18 +118,26 @@ class _SplashScreenFixMecState extends State<SplashScreenFixMec>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Lottie.asset(
-                    "assets/animation/Happy Mechanic.json",
+                    "assets/animation/HappyMechanic.json",
                     height: size.height * 0.34,
                     fit: BoxFit.contain,
                   ),
-                  Text(
-                    localization.translate("app_name"),
-                    style: const TextStyle(
-                      fontSize: 50,
-                      fontFamily: 'MiFuente',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                      decoration: TextDecoration.none,
+                  SizedBox(
+                    height: 55,
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        FadeAnimatedText(
+                          localization.translate("app_name"),
+                          textStyle: TextStyle(
+                            fontSize: 50,
+                            fontFamily: 'MiFuente',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                      ],
+                      isRepeatingAnimation: true,
                     ),
                   ),
                   Padding(
@@ -163,20 +171,6 @@ class _SplashScreenFixMecState extends State<SplashScreenFixMec>
                         ],
                       ),
                     ),
-                    // child: AutoSizeText(
-                    //   localization.translate("diagnosis"),
-                    //   textAlign: TextAlign.center,
-                    //   style: const TextStyle(
-                    //     fontSize: 18,
-                    //     fontFamily: "MiFuente",
-                    //     fontWeight: FontWeight.bold,
-                    //     color: Colors.black87,
-                    //     decoration: TextDecoration.none,
-                    //   ),
-                    //   minFontSize: 12,
-                    //   maxLines: 2,
-                    //   overflow: TextOverflow.ellipsis,
-                    // ),
                   ),
                 ],
               ),
