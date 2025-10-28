@@ -24,7 +24,14 @@ class _LanguageFixMecState extends State<LanguageFixMec> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            widget.onIndexChanged(5);
+          },
+          icon: Icon(Icons.arrow_back_ios_new, color: Color(0xFF00B4DB)),
+        ),
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
