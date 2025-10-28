@@ -114,7 +114,7 @@ class _InicioFixMec extends State<InicioFixMec> {
             crossAxisSpacing: 12,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: 2.0,
+            childAspectRatio: 1.7,
             children: [
               PercentFixMec(
                 title: loc.translate("oil"),
