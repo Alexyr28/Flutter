@@ -4,9 +4,23 @@ import 'package:fixmec/services/localization_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ChatHistoryPage extends StatelessWidget {
-  const ChatHistoryPage({super.key});
+class ChatHistoryPage extends StatefulWidget {
+  final ValueChanged<int> onIndexChanged;
+  final int currentIndex;
+  final ValueChanged<String>? onChatSelected;
 
+  const ChatHistoryPage({
+    super.key,
+    required this.currentIndex,
+    required this.onIndexChanged,
+    this.onChatSelected,
+  });
+
+  @override
+  State<ChatHistoryPage> createState() => _ChatHistoryPageState();
+}
+
+class _ChatHistoryPageState extends State<ChatHistoryPage> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
@@ -66,12 +80,31 @@ class ChatHistoryPage extends StatelessWidget {
                   }
                 },
                 child: ListTile(
-                  title: Text(title),
+                  title: Text(
+                    title,
+                    style: TextStyle(
+                      fontFamily: "MiFuente",
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                   subtitle: Text(
                     date != null
                         ? "${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}"
                         : "Sin fecha",
+                    style: TextStyle(
+                      fontFamily: "MiFuente",
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
+                  trailing: Icon(Icons.arrow_forward_ios_outlined, size: 16),
+                  //Moverse a la pagina del chat y pasar el ID
+                  onTap: () => {
+                    if (widget.onChatSelected != null)
+                      {widget.onChatSelected!(chat.id)},
+                    widget.onIndexChanged(1),
+                  },
                 ),
               );
             },

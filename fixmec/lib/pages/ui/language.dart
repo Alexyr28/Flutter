@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 class LanguageFixMec extends StatefulWidget {
   final bool isDark;
   final ValueChanged<bool> onThemeChanged;
+  final ValueChanged<int> onIndexChanged;
   final int currentIndex;
 
   const LanguageFixMec({
@@ -12,6 +13,7 @@ class LanguageFixMec extends StatefulWidget {
     required this.isDark,
     required this.onThemeChanged,
     required this.currentIndex,
+    required this.onIndexChanged,
   });
 
   @override
@@ -22,6 +24,7 @@ class _LanguageFixMecState extends State<LanguageFixMec> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
