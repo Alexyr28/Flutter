@@ -36,6 +36,7 @@ class _DiagnosisFixMec extends State<DiagnosisFixMec> {
   Future<void> loadInitial() async {
     setState(() => loading = true);
     final data = await ApiService.getInitial();
+
     setState(() {
       messages.add(Message(text: data['text'], isUser: false));
       options = List<String>.from(data['options'] ?? []);
@@ -44,6 +45,7 @@ class _DiagnosisFixMec extends State<DiagnosisFixMec> {
     });
   }
 
+  String currentKey = "sintoma_freno";
   // Esta funcion se ejecuta cuando el usuario selecciona una de las opciones
   Future<void> onOptionSelected(String option) async {
     // Añadimos la respuesta del usuario
@@ -55,7 +57,7 @@ class _DiagnosisFixMec extends State<DiagnosisFixMec> {
     });
 
     // Llamamos al servicio API para enviar la respuesta del usuario
-    final data = await ApiService.sendAnswer(option);
+    final data = await ApiService.sendAnswer(currentKey, option);
 
     setState(() {
       if (data['type'] == 'question') {
@@ -161,7 +163,8 @@ class _DiagnosisFixMec extends State<DiagnosisFixMec> {
                     return ElevatedButton(
                       onPressed: () => onOptionSelected(opt),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepOrangeAccent,
+                        textStyle: TextStyle(color: Colors.white),
+                        backgroundColor: const Color(0xFF00B4DB),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
