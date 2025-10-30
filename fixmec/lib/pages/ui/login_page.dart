@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fixmec/pages/ui/home.dart';
@@ -38,10 +39,23 @@ class _LoginPageState extends State<LoginPage> {
           password: _passwordCtrl.text.trim(),
         );
       } else {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _emailCtrl.text.trim(),
-          password: _passwordCtrl.text.trim(),
-        );
+        //Registro Nuevo
+        UserCredential userCred = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: _emailCtrl.text.trim(),
+              password: _passwordCtrl.text.trim(),
+            );
+        //Crear documento de usuario en Firestore
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCred.user!.uid)
+            .set({
+              "progressoil": 0.0,
+              "progesstires": 0.0,
+              "progressbrakes": 0.0,
+              "progresschain": 0.0,
+              "progresslight": 0.0,
+            });
       }
 
       if (!mounted) return;

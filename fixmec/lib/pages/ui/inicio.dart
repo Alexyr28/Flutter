@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixmec/services/localization_service.dart';
 import 'package:fixmec/widgets/percent.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,36 @@ class InicioFixMec extends StatefulWidget {
 }
 
 class _InicioFixMec extends State<InicioFixMec> {
+  double progressoil = 0.0;
+  double progesstires = 0.0;
+  double progressbrakes = 0.0;
+  double progresschain = 0.0;
+  double progresslight = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserProgress();
+  }
+
+  Future<void> loadUserProgress() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+    if (userDoc.exists) {
+      setState(() {
+        progressoil = userDoc['progressoil'] ?? 0.0;
+        progesstires = userDoc['progesstires'] ?? 0.0;
+        progressbrakes = userDoc['progressbrakes'] ?? 0.0;
+        progresschain = userDoc['progresschain'] ?? 0.0;
+        progresslight = userDoc['progresslight'] ?? 0.0;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final loc = Provider.of<LocalizationService>(context);
@@ -120,7 +152,7 @@ class _InicioFixMec extends State<InicioFixMec> {
                 title: loc.translate("oil"),
                 image: "assets/icons/oil.png",
                 subtitle: loc.translate("leveloil"),
-                progress: 0.28,
+                progress: progressoil,
                 onTap: () {
                   showDatePicker(
                     context: context,
@@ -133,7 +165,7 @@ class _InicioFixMec extends State<InicioFixMec> {
                 title: loc.translate("tires"),
                 image: "assets/icons/racing.png",
                 subtitle: loc.translate("checktires"),
-                progress: 0.56,
+                progress: progesstires,
                 onTap: () {
                   showDatePicker(
                     context: context,
@@ -146,7 +178,7 @@ class _InicioFixMec extends State<InicioFixMec> {
                 title: loc.translate("brakes"),
                 image: "assets/icons/disc-brake.png",
                 subtitle: loc.translate("checkbrakes"),
-                progress: 0.9,
+                progress: progressbrakes,
                 onTap: () {
                   showDatePicker(
                     context: context,
@@ -159,7 +191,7 @@ class _InicioFixMec extends State<InicioFixMec> {
                 title: loc.translate("chain"),
                 image: "assets/icons/chain.png",
                 subtitle: loc.translate("checkchain"),
-                progress: 0.67,
+                progress: progresschain,
                 onTap: () {
                   showDatePicker(
                     context: context,
@@ -172,7 +204,7 @@ class _InicioFixMec extends State<InicioFixMec> {
                 title: loc.translate("light"),
                 image: "assets/icons/puzzle.png",
                 subtitle: loc.translate("checklight"),
-                progress: 0.02,
+                progress: progresslight,
                 onTap: () {
                   showDatePicker(
                     context: context,

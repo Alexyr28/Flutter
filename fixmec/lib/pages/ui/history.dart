@@ -42,7 +42,15 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
           final chats = snapshot.data!.docs;
 
           if (chats.isEmpty) {
-            return Center(child: Text(loc.translate('there_are_no_chats_yet')));
+            return Center(
+              child: Text(
+                loc.translate('there_are_no_chats_yet'),
+                style: TextStyle(
+                  fontFamily: "MiFuente",
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
           }
 
           return ListView.builder(
@@ -75,7 +83,15 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
 
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(loc.translate('chat_deleted'))),
+                      SnackBar(
+                        content: Text(
+                          loc.translate('chat_deleted'),
+                          style: TextStyle(
+                            fontFamily: "MiFuente",
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     );
                   }
                 },

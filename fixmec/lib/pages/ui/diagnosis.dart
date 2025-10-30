@@ -35,11 +35,11 @@ class _DiagnosisFixMec extends State<DiagnosisFixMec> {
   // Para luego indicar las opciones que el usuario puede seleccionar
   Future<void> loadInitial() async {
     setState(() => loading = true);
-    final data = await ApiService.getInitial();
+    // final data = await ApiService.getInitial();
 
     setState(() {
-      messages.add(Message(text: data['text'], isUser: false));
-      options = List<String>.from(data['options'] ?? []);
+      // messages.add(Message(text: data['text'], isUser: false));
+      // options = List<String>.from(data['options'] ?? []);
       loading = false;
       scrollToBottom();
     });
