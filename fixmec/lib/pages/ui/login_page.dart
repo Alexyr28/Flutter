@@ -57,7 +57,6 @@ class _LoginPageState extends State<LoginPage> {
               "progresslight": 0.0,
             });
       }
-
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
