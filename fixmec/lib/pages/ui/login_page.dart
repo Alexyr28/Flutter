@@ -20,6 +20,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
+      GlobalKey<ScaffoldMessengerState>();
+
   bool _isLogin = true;
   bool _isLoading = false;
 
@@ -29,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   final _confirmCtrl = TextEditingController();
 
   Future<void> _submit() async {
+    final loc = Provider.of<LocalizationService>(context, listen: false);
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isLoading = true);
     //revisar firebase auth
@@ -38,47 +42,80 @@ class _LoginPageState extends State<LoginPage> {
           email: _emailCtrl.text.trim(),
           password: _passwordCtrl.text.trim(),
         );
-      } else {
-        //Registro Nuevo
-        UserCredential userCred = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-              email: _emailCtrl.text.trim(),
-              password: _passwordCtrl.text.trim(),
-            );
-        //Crear documento de usuario en Firestore
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCred.user!.uid)
-            .set({
-              "progressoil": 0.0,
-              "progesstires": 0.0,
-              "progressbrakes": 0.0,
-              "progresschain": 0.0,
-              "progresslight": 0.0,
-            });
+        if (!mounted) return;
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => HomeFixMec(
+              isDark: widget.isDark,
+              onThemeChanged: widget.onThemeChanged,
+            ),
+          ),
+        );
+        return;
       }
+      //Registro Nuevo
+      UserCredential userCred = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: _emailCtrl.text.trim(),
+            password: _passwordCtrl.text.trim(),
+          );
+      //Crear documento de usuario en Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCred.user!.uid)
+          .set({
+            "progressoil": 0.0,
+            "progesstires": 0.0,
+            "progressbrakes": 0.0,
+            "progresschain": 0.0,
+            "progresslight": 0.0,
+            'createdAt': DateTime.now(),
+          });
       if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomeFixMec(
-            isDark: widget.isDark,
-            onThemeChanged: widget.onThemeChanged,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            loc.translate("userregok"),
+            style: TextStyle(
+              fontFamily: "MiFuente",
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
       );
+      setState(() {
+        _isLogin = true;
+      });
+      _passwordCtrl.clear();
+      _confirmCtrl.clear();
     } on FirebaseAuthException catch (e) {
-      String msg =
-          "${Provider.of<LocalizationService>(context).translate("error")}: ${e.message}";
-      if (e.code == "user-not-found") {
-        msg = Provider.of<LocalizationService>(context).translate("usernot");
+      String msg = "${loc.translate("error")}: ${e.code}";
+      if (e.code == "user-not-found" || e.code == "invalid-credential") {
+        msg = loc.translate("usernot");
       }
-      if (e.code == "wrong-password") msg = "Contraseña incorrecta.";
+      if (e.code == "wrong-password") {
+        msg = loc.translate("passwordincorrect");
+      }
       if (e.code == "email-already-in-use") {
-        msg = Provider.of<LocalizationService>(context).translate("emailreg");
+        msg = loc.translate("emailreg");
+      }
+      if (e.code == "invalid-email") {
+        msg = loc.translate("invalidemail");
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      _scaffoldKey.currentState?.showSnackBar(
+        SnackBar(
+          content: Text(
+            msg,
+            style: TextStyle(
+              fontFamily: "MiFuente",
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
     } finally {
       setState(() => _isLoading = false);
     }
@@ -138,95 +175,83 @@ class _LoginPageState extends State<LoginPage> {
     final loc = Provider.of<LocalizationService>(context);
     final size = MediaQuery.of(context).size;
     //visual
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomLeft,
-            colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
+    return ScaffoldMessenger(
+      key: _scaffoldKey,
+      child: Scaffold(
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomLeft,
+              colors: [Color(0xFF004E92), Color(0xFF00B4DB)],
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
-            child: Column(
-              children: [
-                Image.asset(
-                  "assets/icons/repair.png",
-                  height: size.height * 0.14,
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  loc.translate("app_name"),
-                  style: TextStyle(
-                    fontFamily: "MiFuente",
-                    fontSize: 25,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+          child: SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
+              child: Column(
+                children: [
+                  Image.asset(
+                    "assets/icons/repair.png",
+                    height: size.height * 0.14,
                   ),
-                ),
-                Text(
-                  loc.translate("diag"),
-                  style: const TextStyle(
-                    fontFamily: "MiFuente",
-                    fontSize: 12,
-                    color: Colors.white70,
+                  const SizedBox(height: 6),
+                  Text(
+                    loc.translate("app_name"),
+                    style: TextStyle(
+                      fontFamily: "MiFuente",
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 25),
+                  Text(
+                    loc.translate("diag"),
+                    style: const TextStyle(
+                      fontFamily: "MiFuente",
+                      fontSize: 12,
+                      color: Colors.white70,
+                    ),
+                  ),
+                  const SizedBox(height: 25),
 
-                // Pestañassss: Sign In / Sign Up
-                Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    color: Colors.white24,
-                    borderRadius: BorderRadius.circular(12),
+                  // Pestañassss: Sign In / Sign Up
+                  Container(
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Colors.white24,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        _buildTabButton(context, "login", true),
+                        _buildTabButton(context, "register", false),
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      _buildTabButton(context, "login", true),
-                      _buildTabButton(context, "register", false),
-                    ],
-                  ),
-                ),
 
-                const SizedBox(height: 35),
+                  const SizedBox(height: 35),
 
-                // Formulario dinámico
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: _emailCtrl,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "MiFuente",
+                  // Formulario dinámico
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _emailCtrl,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "MiFuente",
+                          ),
+                          decoration: _inputDeco(context, "email", Icons.email),
+                          validator: (v) =>
+                              v!.isEmpty ? loc.translate("putemail") : null,
                         ),
-                        decoration: _inputDeco(context, "email", Icons.email),
-                        validator: (v) =>
-                            v!.isEmpty ? loc.translate("putemail") : null,
-                      ),
-                      const SizedBox(height: 20),
-                      TextFormField(
-                        controller: _passwordCtrl,
-                        obscureText: true,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "MiFuente",
-                          fontWeight: FontWeight.bold,
-                        ),
-                        decoration: _inputDeco(context, "password", Icons.lock),
-                        validator: (v) =>
-                            v!.length < 6 ? loc.translate("mincharac") : null,
-                      ),
-                      if (!_isLogin) ...[
                         const SizedBox(height: 20),
                         TextFormField(
-                          controller: _confirmCtrl,
+                          controller: _passwordCtrl,
                           obscureText: true,
                           style: TextStyle(
                             color: Colors.white,
@@ -235,41 +260,62 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           decoration: _inputDeco(
                             context,
-                            "confirmpass",
-                            Icons.lock_outline,
+                            "password",
+                            Icons.lock,
                           ),
-                          validator: (v) => v != _passwordCtrl.text
-                              ? loc.translate("passnot")
-                              : null,
+                          validator: (v) =>
+                              v!.length < 6 ? loc.translate("mincharac") : null,
                         ),
-                      ],
-                      const SizedBox(height: 30),
-                      _isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : ElevatedButton(
-                              onPressed: _submit,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.blueAccent,
-                                minimumSize: const Size(double.infinity, 50),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              child: Text(
-                                _isLogin
-                                    ? loc.translate("login")
-                                    : loc.translate("register"),
-                                style: TextStyle(
-                                  fontFamily: "MiFuente",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                        if (!_isLogin) ...[
+                          const SizedBox(height: 20),
+                          TextFormField(
+                            controller: _confirmCtrl,
+                            obscureText: true,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "MiFuente",
+                              fontWeight: FontWeight.bold,
                             ),
-                    ],
+                            decoration: _inputDeco(
+                              context,
+                              "confirmpass",
+                              Icons.lock_outline,
+                            ),
+                            validator: (v) => v != _passwordCtrl.text
+                                ? loc.translate("passnot")
+                                : null,
+                          ),
+                        ],
+                        const SizedBox(height: 30),
+                        _isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : ElevatedButton(
+                                onPressed: _submit,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.blueAccent,
+                                  minimumSize: const Size(double.infinity, 50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: Text(
+                                  _isLogin
+                                      ? loc.translate("login")
+                                      : loc.translate("register"),
+                                  style: TextStyle(
+                                    fontFamily: "MiFuente",
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

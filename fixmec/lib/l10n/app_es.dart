@@ -54,7 +54,7 @@ const Map<String, String> es = {
   "diag1": "Diagnóstico",
   "write": "Escribe tu Mensaje...",
   "mechanic":
-      "Eres un mecánico experto en diagnóstico de motos y entregas respuestas concretas y cortas",
+      "Eres un mecánico experto en diagnóstico de motos y entregas respuestas concretas y cortas y cuando te digan gracias o que ya resolvieron las dudas te despides cordialmente",
   "server": "Tenemos problemas con nuestro servidor intentalo de nuevo",
   "motorfailures": "Fallas Motor",
   "electricalfailures": "Fallas Eléctricas",
@@ -124,4 +124,13 @@ const Map<String, String> es = {
   "there_are_no_chats_yet": "Aún no hay chats",
   "light": "Luces",
   "checklight": "Verificar faros y stops",
+  "userregok": "Usuario registrado con éxito",
+  "passwordincorrect": "Contraseña incorrecta",
+  "invalidemail": "Correo electrónico inválido",
+  "typing": "Escribiendo",
+  "clearchat": "Limpiar Chat",
+  "sureclear": "¿Seguro que quieres borrar el chat?",
+  "delete": "Eliminar",
+  "chatdeleted": "Chat eliminado",
+  "newchat": "Nuevo Chat",
 };

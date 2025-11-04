@@ -35,6 +35,7 @@ class _InicioFixMec extends State<InicioFixMec> {
     loadUserProgress();
   }
 
+  //Carga el progreso del usuario desde Firestore
   Future<void> loadUserProgress() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -51,6 +52,20 @@ class _InicioFixMec extends State<InicioFixMec> {
         progresslight = userDoc['progresslight'] ?? 0.0;
       });
     }
+  }
+
+  //Actualiza el progreso del usuario en Firestore
+  Future<void> updateUserProgress(
+    String field,
+    double progress,
+    DateTime date,
+  ) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
+      field: progress,
+      "${field}Date": date,
+    }, SetOptions(merge: true));
   }
 
   @override
@@ -153,12 +168,19 @@ class _InicioFixMec extends State<InicioFixMec> {
                 image: "assets/icons/oil.png",
                 subtitle: loc.translate("leveloil"),
                 progress: progressoil,
-                onTap: () {
-                  showDatePicker(
+                onTap: () async {
+                  DateTime? date = await showDatePicker(
                     context: context,
                     firstDate: DateTime(2018),
                     lastDate: DateTime.now(),
                   );
+                  if (date != null) {
+                    setState(() {
+                      progressoil = 1.0;
+                    });
+
+                    await updateUserProgress("progressoil", progressoil, date);
+                  }
                 },
               ),
               PercentFixMec(
@@ -166,12 +188,23 @@ class _InicioFixMec extends State<InicioFixMec> {
                 image: "assets/icons/racing.png",
                 subtitle: loc.translate("checktires"),
                 progress: progesstires,
-                onTap: () {
-                  showDatePicker(
+                onTap: () async {
+                  DateTime? date = await showDatePicker(
                     context: context,
                     firstDate: DateTime(2018),
                     lastDate: DateTime.now(),
                   );
+                  if (date != null) {
+                    setState(() {
+                      progesstires = 1.0;
+                    });
+
+                    await updateUserProgress(
+                      "progesstires",
+                      progesstires,
+                      date,
+                    );
+                  }
                 },
               ),
               PercentFixMec(
@@ -179,12 +212,23 @@ class _InicioFixMec extends State<InicioFixMec> {
                 image: "assets/icons/disc-brake.png",
                 subtitle: loc.translate("checkbrakes"),
                 progress: progressbrakes,
-                onTap: () {
-                  showDatePicker(
+                onTap: () async {
+                  DateTime? date = await showDatePicker(
                     context: context,
                     firstDate: DateTime(2018),
                     lastDate: DateTime.now(),
                   );
+                  if (date != null) {
+                    setState(() {
+                      progressbrakes = 1.0;
+                    });
+
+                    await updateUserProgress(
+                      "progressbrakes",
+                      progressbrakes,
+                      date,
+                    );
+                  }
                 },
               ),
               PercentFixMec(
@@ -192,12 +236,23 @@ class _InicioFixMec extends State<InicioFixMec> {
                 image: "assets/icons/chain.png",
                 subtitle: loc.translate("checkchain"),
                 progress: progresschain,
-                onTap: () {
-                  showDatePicker(
+                onTap: () async {
+                  DateTime? date = await showDatePicker(
                     context: context,
                     firstDate: DateTime(2018),
                     lastDate: DateTime.now(),
                   );
+                  if (date != null) {
+                    setState(() {
+                      progresschain = 1.0;
+                    });
+
+                    await updateUserProgress(
+                      "progresschain",
+                      progresschain,
+                      date,
+                    );
+                  }
                 },
               ),
               PercentFixMec(
@@ -205,12 +260,23 @@ class _InicioFixMec extends State<InicioFixMec> {
                 image: "assets/icons/puzzle.png",
                 subtitle: loc.translate("checklight"),
                 progress: progresslight,
-                onTap: () {
-                  showDatePicker(
+                onTap: () async {
+                  DateTime? date = await showDatePicker(
                     context: context,
                     firstDate: DateTime(2018),
                     lastDate: DateTime.now(),
                   );
+                  if (date != null) {
+                    setState(() {
+                      progresslight = 1.0;
+                    });
+
+                    await updateUserProgress(
+                      "progresslight",
+                      progresslight,
+                      date,
+                    );
+                  }
                 },
               ),
             ],
