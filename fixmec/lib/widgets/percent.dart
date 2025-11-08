@@ -44,6 +44,8 @@ class PercentFixMec extends StatelessWidget {
               progressColor: primaryLightBlue,
               backgroundColor: Colors.grey.shade200,
               circularStrokeCap: CircularStrokeCap.round,
+              animation: true,
+              animationDuration: 1200,
             ),
             Padding(padding: EdgeInsets.all(8.0)),
             Expanded(

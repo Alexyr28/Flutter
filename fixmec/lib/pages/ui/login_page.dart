@@ -52,43 +52,50 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
         return;
-      }
-      //Registro Nuevo
-      UserCredential userCred = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-            email: _emailCtrl.text.trim(),
-            password: _passwordCtrl.text.trim(),
-          );
-      //Crear documento de usuario en Firestore
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCred.user!.uid)
-          .set({
-            "progressoil": 0.0,
-            "progesstires": 0.0,
-            "progressbrakes": 0.0,
-            "progresschain": 0.0,
-            "progresslight": 0.0,
-            'createdAt': DateTime.now(),
-          });
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            loc.translate("userregok"),
-            style: TextStyle(
-              fontFamily: "MiFuente",
-              fontWeight: FontWeight.bold,
+      } else {
+        //Registro Nuevo
+        UserCredential userCred = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: _emailCtrl.text.trim(),
+              password: _passwordCtrl.text.trim(),
+            );
+        //Crear documento de usuario en Firestore
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCred.user!.uid)
+            .set({
+              "progressoil": 0.0,
+              "progesstires": 0.0,
+              "progressbrakes": 0.0,
+              "progresschain": 0.0,
+              "progresslight": 0.0,
+              'progressoilDate': null,
+              'progesstiresDate': null,
+              'progressbrakesDate': null,
+              'progresschainDate': null,
+              'progresslightDate': null,
+            });
+        if (!mounted) return;
+        _scaffoldKey.currentState?.showSnackBar(
+          SnackBar(
+            content: Text(
+              loc.translate("userregok"),
+              style: TextStyle(
+                fontFamily: "MiFuente",
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
-        ),
-      );
-      setState(() {
-        _isLogin = true;
-      });
-      _passwordCtrl.clear();
-      _confirmCtrl.clear();
+        );
+        setState(() {
+          _isLogin = true;
+        });
+        _passwordCtrl.clear();
+        _confirmCtrl.clear();
+
+        return;
+      }
     } on FirebaseAuthException catch (e) {
       String msg = "${loc.translate("error")}: ${e.code}";
       if (e.code == "user-not-found" || e.code == "invalid-credential") {

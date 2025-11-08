@@ -43,15 +43,52 @@ class _InicioFixMec extends State<InicioFixMec> {
         .collection('users')
         .doc(user.uid)
         .get();
-    if (userDoc.exists) {
-      setState(() {
-        progressoil = userDoc['progressoil'] ?? 0.0;
-        progesstires = userDoc['progesstires'] ?? 0.0;
-        progressbrakes = userDoc['progressbrakes'] ?? 0.0;
-        progresschain = userDoc['progresschain'] ?? 0.0;
-        progresslight = userDoc['progresslight'] ?? 0.0;
-      });
+
+    if (!userDoc.exists) return;
+
+    double calcProgress(dynamic progessValue, dynamic dateValue) {
+      if (progessValue == null || dateValue == null) return 0.0;
+      DateTime lastDate;
+
+      //Conversion de Firebase
+      if (dateValue is Timestamp) {
+        lastDate = dateValue.toDate();
+      } else {
+        lastDate = DateTime.parse(dateValue.toString());
+      }
+
+      int dif = DateTime.now().difference(lastDate).inDays;
+
+      //Mes igual a 30 dias
+      double newProgress = 1.0 - (dif / 30.0);
+
+      if (newProgress < 0) newProgress = 0.0;
+
+      return newProgress;
     }
+
+    setState(() {
+      progressoil = calcProgress(
+        userDoc['progressoil'],
+        userDoc['progressoilDate'],
+      );
+      progesstires = calcProgress(
+        userDoc['progesstires'],
+        userDoc['progesstiresDate'],
+      );
+      progressbrakes = calcProgress(
+        userDoc['progressbrakes'],
+        userDoc['progressbrakesDate'],
+      );
+      progresschain = calcProgress(
+        userDoc['progresschain'],
+        userDoc['progresschainDate'],
+      );
+      progresslight = calcProgress(
+        userDoc['progresslight'],
+        userDoc['progresslightDate'],
+      );
+    });
   }
 
   //Actualiza el progreso del usuario en Firestore
