@@ -4,6 +4,7 @@ import 'package:fixmec/pages/ui/diagnosis.dart';
 import 'package:fixmec/pages/ui/failures.dart';
 import 'package:fixmec/pages/ui/history.dart';
 import 'package:fixmec/pages/ui/inicio.dart';
+import 'package:fixmec/pages/ui/intervals_fixmec.dart';
 import 'package:fixmec/pages/ui/language.dart';
 import 'package:fixmec/pages/ui/settings.dart';
 import 'package:fixmec/services/localization_service.dart';
@@ -53,6 +54,7 @@ class _HomeFixMecState extends State<HomeFixMec> {
       loc.translate("configuration"),
       loc.translate("about"),
       loc.translate("language"),
+      loc.translate("intervals"),
     ];
 
     return Scaffold(
@@ -137,6 +139,18 @@ class _HomeFixMecState extends State<HomeFixMec> {
             isDark: widget.isDark,
             onThemeChanged: widget.onThemeChanged,
             currentIndex: 7,
+            onIndexChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+          ),
+
+          //Intervalos
+          IntervalFixMec(
+            isDark: widget.isDark,
+            onThemeChanged: widget.onThemeChanged,
+            currentIndex: 8,
             onIndexChanged: (index) {
               setState(() {
                 _currentIndex = index;

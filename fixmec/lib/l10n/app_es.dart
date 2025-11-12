@@ -133,4 +133,11 @@ const Map<String, String> es = {
   "delete": "Eliminar",
   "chatdeleted": "Chat eliminado",
   "newchat": "Nuevo Chat",
+  "selectbirthdate": "Selecciona tu fecha de nacimiento",
+  "confirm": "Confirmar",
+  "intervals": "Intervalos de Mantenimiento",
+  "days": "días",
+  "intervalof": "Intervalo de",
+  "auptaded": "actualizado a",
+  "selectinterval": "Selecciona el intervalo (días)",
 };

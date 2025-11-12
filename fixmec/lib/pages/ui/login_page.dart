@@ -74,6 +74,11 @@ class _LoginPageState extends State<LoginPage> {
               'progressbrakesDate': null,
               'progresschainDate': null,
               'progresslightDate': null,
+              "progressoilInterval": 30,
+              "progesstiresInterval": 30,
+              "progressbrakesInterval": 30,
+              "progresschainInterval": 30,
+              "progresslightInterval": 30,
             });
         if (!mounted) return;
         _scaffoldKey.currentState?.showSnackBar(

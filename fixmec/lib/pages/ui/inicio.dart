@@ -29,10 +29,71 @@ class _InicioFixMec extends State<InicioFixMec> {
   double progresschain = 0.0;
   double progresslight = 0.0;
 
+  int oilInterval = 30;
+  int tiresInterval = 30;
+  int brakesInterval = 30;
+  int chainInterval = 30;
+  int lightInterval = 30;
+
   @override
   void initState() {
     super.initState();
     loadUserProgress();
+  }
+
+  Future<DateTime?> showCustomDate(BuildContext context) async {
+    final loc = Provider.of<LocalizationService>(context, listen: false);
+    DateTime selectedDate = DateTime.now();
+
+    return await showModalBottomSheet<DateTime>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          height: 400,
+          child: Column(
+            children: [
+              Text(
+                loc.translate("selectbirthdate"),
+                style: TextStyle(
+                  fontFamily: "MiFuente",
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: CalendarDatePicker(
+                  initialDate: selectedDate,
+                  firstDate: DateTime(2018),
+                  lastDate: DateTime.now(),
+                  onDateChanged: (date) {
+                    selectedDate = date;
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pop(context, selectedDate);
+                },
+                label: Text(loc.translate("confirm")),
+                icon: const Icon(Icons.check),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF00B4DB),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   //Carga el progreso del usuario desde Firestore
@@ -46,49 +107,64 @@ class _InicioFixMec extends State<InicioFixMec> {
 
     if (!userDoc.exists) return;
 
-    double calcProgress(dynamic progessValue, dynamic dateValue) {
-      if (progessValue == null || dateValue == null) return 0.0;
-      DateTime lastDate;
-
-      //Conversion de Firebase
-      if (dateValue is Timestamp) {
-        lastDate = dateValue.toDate();
-      } else {
-        lastDate = DateTime.parse(dateValue.toString());
-      }
-
-      int dif = DateTime.now().difference(lastDate).inDays;
-
-      //Mes igual a 30 dias
-      double newProgress = 1.0 - (dif / 30.0);
-
-      if (newProgress < 0) newProgress = 0.0;
-
-      return newProgress;
-    }
-
     setState(() {
+      oilInterval = userDoc['progressoilInterval'] ?? 30;
+      tiresInterval = userDoc['progesstiresInterval'] ?? 30;
+      brakesInterval = userDoc['progressbrakesInterval'] ?? 30;
+      chainInterval = userDoc['progresschainInterval'] ?? 30;
+      lightInterval = userDoc['progresslightInterval'] ?? 30;
+
       progressoil = calcProgress(
         userDoc['progressoil'],
         userDoc['progressoilDate'],
+        oilInterval,
       );
       progesstires = calcProgress(
         userDoc['progesstires'],
         userDoc['progesstiresDate'],
+        tiresInterval,
       );
       progressbrakes = calcProgress(
         userDoc['progressbrakes'],
         userDoc['progressbrakesDate'],
+        brakesInterval,
       );
       progresschain = calcProgress(
         userDoc['progresschain'],
         userDoc['progresschainDate'],
+        chainInterval,
       );
       progresslight = calcProgress(
         userDoc['progresslight'],
         userDoc['progresslightDate'],
+        lightInterval,
       );
     });
+  }
+
+  double calcProgress(
+    dynamic progessValue,
+    dynamic dateValue, [
+    int intervalDays = 30,
+  ]) {
+    if (progessValue == null || dateValue == null) return 0.0;
+    DateTime lastDate;
+
+    //Conversion de Firebase
+    if (dateValue is Timestamp) {
+      lastDate = dateValue.toDate();
+    } else {
+      lastDate = DateTime.parse(dateValue.toString());
+    }
+
+    int dif = DateTime.now().difference(lastDate).inDays;
+
+    //Mes igual a 30 dias
+    double newProgress = 1.0 - (dif / intervalDays);
+
+    if (newProgress < 0) newProgress = 0.0;
+
+    return newProgress;
   }
 
   //Actualiza el progreso del usuario en Firestore
@@ -206,18 +282,16 @@ class _InicioFixMec extends State<InicioFixMec> {
                 subtitle: loc.translate("leveloil"),
                 progress: progressoil,
                 onTap: () async {
-                  DateTime? date = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime(2018),
-                    lastDate: DateTime.now(),
-                  );
+                  DateTime? date = await showCustomDate(context);
                   if (date != null) {
+                    double newProgress = calcProgress(1.0, date, oilInterval);
                     setState(() {
-                      progressoil = 1.0;
+                      progressoil = newProgress;
                     });
 
-                    await updateUserProgress("progressoil", progressoil, date);
+                    await updateUserProgress("progressoil", newProgress, date);
                   }
+                  await loadUserProgress();
                 },
               ),
               PercentFixMec(
@@ -226,22 +300,16 @@ class _InicioFixMec extends State<InicioFixMec> {
                 subtitle: loc.translate("checktires"),
                 progress: progesstires,
                 onTap: () async {
-                  DateTime? date = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime(2018),
-                    lastDate: DateTime.now(),
-                  );
+                  DateTime? date = await showCustomDate(context);
                   if (date != null) {
+                    double newProgress = calcProgress(1.0, date, tiresInterval);
                     setState(() {
-                      progesstires = 1.0;
+                      progesstires = newProgress;
                     });
 
-                    await updateUserProgress(
-                      "progesstires",
-                      progesstires,
-                      date,
-                    );
+                    await updateUserProgress("progesstires", newProgress, date);
                   }
+                  await loadUserProgress();
                 },
               ),
               PercentFixMec(
@@ -250,22 +318,24 @@ class _InicioFixMec extends State<InicioFixMec> {
                 subtitle: loc.translate("checkbrakes"),
                 progress: progressbrakes,
                 onTap: () async {
-                  DateTime? date = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime(2018),
-                    lastDate: DateTime.now(),
-                  );
+                  DateTime? date = await showCustomDate(context);
                   if (date != null) {
+                    double newProgress = calcProgress(
+                      1.0,
+                      date,
+                      brakesInterval,
+                    );
                     setState(() {
-                      progressbrakes = 1.0;
+                      progressbrakes = newProgress;
                     });
 
                     await updateUserProgress(
                       "progressbrakes",
-                      progressbrakes,
+                      newProgress,
                       date,
                     );
                   }
+                  await loadUserProgress();
                 },
               ),
               PercentFixMec(
@@ -274,22 +344,20 @@ class _InicioFixMec extends State<InicioFixMec> {
                 subtitle: loc.translate("checkchain"),
                 progress: progresschain,
                 onTap: () async {
-                  DateTime? date = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime(2018),
-                    lastDate: DateTime.now(),
-                  );
+                  DateTime? date = await showCustomDate(context);
                   if (date != null) {
+                    double newProgress = calcProgress(1.0, date, chainInterval);
                     setState(() {
-                      progresschain = 1.0;
+                      progresschain = newProgress;
                     });
 
                     await updateUserProgress(
                       "progresschain",
-                      progresschain,
+                      newProgress,
                       date,
                     );
                   }
+                  await loadUserProgress();
                 },
               ),
               PercentFixMec(
@@ -298,22 +366,20 @@ class _InicioFixMec extends State<InicioFixMec> {
                 subtitle: loc.translate("checklight"),
                 progress: progresslight,
                 onTap: () async {
-                  DateTime? date = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime(2018),
-                    lastDate: DateTime.now(),
-                  );
+                  DateTime? date = await showCustomDate(context);
                   if (date != null) {
+                    double newProgress = calcProgress(1.0, date, lightInterval);
                     setState(() {
-                      progresslight = 1.0;
+                      progresslight = newProgress;
                     });
 
                     await updateUserProgress(
                       "progresslight",
-                      progresslight,
+                      newProgress,
                       date,
                     );
                   }
+                  await loadUserProgress();
                 },
               ),
             ],

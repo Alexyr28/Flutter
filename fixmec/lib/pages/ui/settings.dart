@@ -81,6 +81,13 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                     },
                   ),
                 ),
+                _CustomListTile(
+                  title: "intervals",
+                  icon: Icons.timelapse_outlined,
+                  onTap: () {
+                    widget.onIndexChanged(8);
+                  },
+                ),
               ],
             ),
           ],
