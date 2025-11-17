@@ -4,6 +4,9 @@ import 'package:fixmec/l10n/app_en.dart';
 import 'package:fixmec/l10n/app_es.dart';
 
 class LocalizationService extends ChangeNotifier {
+  static final LocalizationService instance = LocalizationService._internal();
+  LocalizationService._internal();
+
   Locale _locale = const Locale('es');
   Map<String, String> _localizedStrings = es;
 

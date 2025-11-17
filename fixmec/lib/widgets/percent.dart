@@ -19,9 +19,21 @@ class PercentFixMec extends StatelessWidget {
     this.onTap,
   });
 
+  Color getProgressColor(double progress) {
+    if (progress < 0.10) {
+      return Colors.red;
+    } else if (progress < 0.25) {
+      return Colors.orange;
+    } else if (progress < 0.60) {
+      return Colors.green;
+    } else {
+      return Color(0xFF00B4DB);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    const Color primaryLightBlue = Color(0xFF00B4DB);
+    //const Color primaryLightBlue = Color(0xFF00B4DB);
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: onTap,
@@ -33,15 +45,15 @@ class PercentFixMec extends StatelessWidget {
             CircularPercentIndicator(
               radius: 27.0,
               lineWidth: 4,
-              percent: progress,
+              percent: progress.clamp(0, 1),
               center: Image.asset(
                 image,
-                color: primaryLightBlue,
+                color: getProgressColor(progress),
                 width: 25,
                 height: 25,
                 fit: BoxFit.contain,
               ),
-              progressColor: primaryLightBlue,
+              progressColor: getProgressColor(progress),
               backgroundColor: Colors.grey.shade200,
               circularStrokeCap: CircularStrokeCap.round,
               animation: true,

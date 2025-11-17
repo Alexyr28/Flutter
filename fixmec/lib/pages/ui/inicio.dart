@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixmec/services/localization_service.dart';
+import 'package:fixmec/services/progress_alert_service.dart';
 import 'package:fixmec/widgets/percent.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -290,6 +291,10 @@ class _InicioFixMec extends State<InicioFixMec> {
                     });
 
                     await updateUserProgress("progressoil", newProgress, date);
+                    ProgressAlertService.checkProgress(
+                      title: loc.translate("leveloil"),
+                      progress: newProgress,
+                    );
                   }
                   await loadUserProgress();
                 },
@@ -308,6 +313,10 @@ class _InicioFixMec extends State<InicioFixMec> {
                     });
 
                     await updateUserProgress("progesstires", newProgress, date);
+                    ProgressAlertService.checkProgress(
+                      title: loc.translate("checktires"),
+                      progress: newProgress,
+                    );
                   }
                   await loadUserProgress();
                 },
@@ -334,6 +343,10 @@ class _InicioFixMec extends State<InicioFixMec> {
                       newProgress,
                       date,
                     );
+                    ProgressAlertService.checkProgress(
+                      title: loc.translate("checkbrakes"),
+                      progress: newProgress,
+                    );
                   }
                   await loadUserProgress();
                 },
@@ -356,6 +369,11 @@ class _InicioFixMec extends State<InicioFixMec> {
                       newProgress,
                       date,
                     );
+
+                    ProgressAlertService.checkProgress(
+                      title: loc.translate("checkchain"),
+                      progress: newProgress,
+                    );
                   }
                   await loadUserProgress();
                 },
@@ -377,6 +395,10 @@ class _InicioFixMec extends State<InicioFixMec> {
                       "progresslight",
                       newProgress,
                       date,
+                    );
+                    ProgressAlertService.checkProgress(
+                      title: loc.translate("light"),
+                      progress: newProgress,
                     );
                   }
                   await loadUserProgress();

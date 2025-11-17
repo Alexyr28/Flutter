@@ -1,3 +1,4 @@
+import 'package:fixmec/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,11 +7,16 @@ import 'package:fixmec/services/localization_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final localizationService = LocalizationService();
+
+  await NotificationService.init();
+  await NotificationService.requestPermissions();
+
+  final localizationService = LocalizationService.instance;
   await localizationService.loadSavedLanguage();
+
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => localizationService,
+    ChangeNotifierProvider.value(
+      value: localizationService,
       child: const FixMec(),
     ),
   );

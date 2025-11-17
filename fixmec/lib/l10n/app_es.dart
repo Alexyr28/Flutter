@@ -140,4 +140,13 @@ const Map<String, String> es = {
   "intervalof": "Intervalo de",
   "auptaded": "actualizado a",
   "selectinterval": "Selecciona el intervalo (días)",
+  "urgent": "Urgente",
+  "progress_below_10":
+      "El progreso de mantenimiento ha caído por debajo del 10%. Se requiere atención inmediata.",
+  "attention": "Atención",
+  "progress_below_25":
+      "El progreso de mantenimiento ha caído por debajo del 25%. Por favor, revise pronto.",
+  "advertence": "Advertencia",
+  "progress_below_50":
+      "El progreso de mantenimiento ha caído por debajo del 50%. Considere tomar medidas.",
 };
