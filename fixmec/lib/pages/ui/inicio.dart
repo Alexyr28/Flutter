@@ -290,10 +290,10 @@ class _InicioFixMec extends State<InicioFixMec> {
                       progressoil = newProgress;
                     });
 
-                    await updateUserProgress("progressoil", newProgress, date);
+                    await updateUserProgress("progressoil", progressoil, date);
                     ProgressAlertService.checkProgress(
                       title: loc.translate("leveloil"),
-                      progress: newProgress,
+                      progress: progressoil,
                     );
                   }
                   await loadUserProgress();
@@ -315,7 +315,7 @@ class _InicioFixMec extends State<InicioFixMec> {
                     await updateUserProgress("progesstires", newProgress, date);
                     ProgressAlertService.checkProgress(
                       title: loc.translate("checktires"),
-                      progress: newProgress,
+                      progress: progesstires,
                     );
                   }
                   await loadUserProgress();
@@ -345,7 +345,7 @@ class _InicioFixMec extends State<InicioFixMec> {
                     );
                     ProgressAlertService.checkProgress(
                       title: loc.translate("checkbrakes"),
-                      progress: newProgress,
+                      progress: progressbrakes,
                     );
                   }
                   await loadUserProgress();
@@ -372,7 +372,7 @@ class _InicioFixMec extends State<InicioFixMec> {
 
                     ProgressAlertService.checkProgress(
                       title: loc.translate("checkchain"),
-                      progress: newProgress,
+                      progress: progresschain,
                     );
                   }
                   await loadUserProgress();
@@ -398,7 +398,7 @@ class _InicioFixMec extends State<InicioFixMec> {
                     );
                     ProgressAlertService.checkProgress(
                       title: loc.translate("light"),
-                      progress: newProgress,
+                      progress: progresslight,
                     );
                   }
                   await loadUserProgress();
