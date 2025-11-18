@@ -292,7 +292,7 @@ class _InicioFixMec extends State<InicioFixMec> {
 
                     await updateUserProgress("progressoil", newProgress, date);
                     ProgressAlertService.checkProgress(
-                      title: loc.translate("leveloil"),
+                      title: loc.translate("oil"),
                       progress: newProgress,
                     );
                   }
@@ -314,7 +314,7 @@ class _InicioFixMec extends State<InicioFixMec> {
 
                     await updateUserProgress("progesstires", newProgress, date);
                     ProgressAlertService.checkProgress(
-                      title: loc.translate("checktires"),
+                      title: loc.translate("tires"),
                       progress: newProgress,
                     );
                   }
@@ -344,7 +344,7 @@ class _InicioFixMec extends State<InicioFixMec> {
                       date,
                     );
                     ProgressAlertService.checkProgress(
-                      title: loc.translate("checkbrakes"),
+                      title: loc.translate("brakes"),
                       progress: newProgress,
                     );
                   }
@@ -371,7 +371,7 @@ class _InicioFixMec extends State<InicioFixMec> {
                     );
 
                     ProgressAlertService.checkProgress(
-                      title: loc.translate("checkchain"),
+                      title: loc.translate("chain"),
                       progress: newProgress,
                     );
                   }
