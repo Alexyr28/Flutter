@@ -58,7 +58,7 @@ class _InicioFixMec extends State<InicioFixMec> {
           child: Column(
             children: [
               Text(
-                loc.translate("selectbirthdate"),
+                loc.translate("selectdatemaintance"),
                 style: TextStyle(
                   fontFamily: "MiFuente",
                   fontWeight: FontWeight.bold,

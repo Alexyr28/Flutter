@@ -135,7 +135,7 @@ const Map<String, String> en = {
   "delete": "Delete",
   "chatdeleted": "Chat deleted",
   "newchat": "New Chat",
-  "selectbirthdate": "Select your birth date",
+  "selectdatemaintance": "Select the maintenance date",
   "confirm": "Confirm",
   "intervals": "Maintenance Intervals",
   "days": "days",
