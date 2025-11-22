@@ -1,3 +1,5 @@
+import "dart:developer";
+import "package:fixmec/services/background_task.dart";
 import "package:fixmec/services/localization_service.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
@@ -86,6 +88,16 @@ class _SettingsFixMec extends State<SettingsFixMec> {
                   icon: Icons.timelapse_outlined,
                   onTap: () {
                     widget.onIndexChanged(8);
+                  },
+                ),
+                _CustomListTile(
+                  title:
+                      "Probar Worker", // Usamos texto literal ya que es un tile de debug
+                  icon: Icons.work_history_outlined,
+                  onTap: () async {
+                    // Llamamos a la función directamente, pasando un mapa vacío.
+                    await backgroundCheck({});
+                    log("Worker de prueba manual finalizado.");
                   },
                 ),
               ],

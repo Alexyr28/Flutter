@@ -1,14 +1,42 @@
+import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fixmec/services/background_task.dart';
+// import 'package:fixmec/services/background_task.dart';
 import 'package:fixmec/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fixmec/pages/ui/splash_screen.dart';
 import 'package:fixmec/services/localization_service.dart';
+import 'package:workmanager/workmanager.dart';
+
+@pragma('vm:entry-point')
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    log("🔥 Ejecutando WorkManager: $task");
+    if (task == periodicTaskName) {
+      await backgroundCheck(inputData ?? {});
+      return Future.value(true);
+    }
+    return Future.value(false);
+  });
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
-  await NotificationService.init();
+  //Workmanager
+  Workmanager().initialize(callbackDispatcher);
+
+  Workmanager().registerPeriodicTask(
+    periodicTaskName,
+    periodicTaskName,
+    frequency: const Duration(hours: 17),
+    initialDelay: const Duration(seconds: 10),
+    constraints: Constraints(networkType: NetworkType.connected),
+  );
+  await NotificationService.initNotifications();
   await NotificationService.requestPermissions();
 
   final localizationService = LocalizationService.instance;

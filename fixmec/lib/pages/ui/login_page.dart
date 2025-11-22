@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fixmec/pages/ui/home.dart';
 import 'package:provider/provider.dart';
 import 'package:fixmec/services/localization_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   final bool isDark;
@@ -42,6 +43,11 @@ class _LoginPageState extends State<LoginPage> {
           email: _emailCtrl.text.trim(),
           password: _passwordCtrl.text.trim(),
         );
+
+        //Guardar UID
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString("uid", FirebaseAuth.instance.currentUser!.uid);
+
         if (!mounted) return;
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -59,6 +65,11 @@ class _LoginPageState extends State<LoginPage> {
               email: _emailCtrl.text.trim(),
               password: _passwordCtrl.text.trim(),
             );
+
+        //Guardar UID
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString("uid", FirebaseAuth.instance.currentUser!.uid);
+
         //Crear documento de usuario en Firestore
         await FirebaseFirestore.instance
             .collection('users')

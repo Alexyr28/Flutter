@@ -54,6 +54,7 @@ dependencies:
   animated_text_kit: ^4.3.0
   circular_menu: ^4.0.0
   flutter_local_notifications: ^19.5.0
+  workmanager: ^0.9.0+3
 
 
 dev_dependencies:
