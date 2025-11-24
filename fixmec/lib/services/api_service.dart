@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   // Base URL para el API
-  static const String baseUrl = "http://10.0.2.2:8000/diagnostico";
+  static const String baseUrl =
+      "https://fixmecapi-production.up.railway.app/diagnostico";
 
   static Future<Map<String, dynamic>> getInitial() async {
     final response = await http.post(Uri.parse('$baseUrl/inicial'));
