@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from controller_diagnostico import procesar_diagnostico
+import uvicorn
+import os
 
 app = FastAPI(
     title='Diagnostico de Fallas en Motos API',
@@ -32,3 +34,7 @@ def diagnostico_inicial():
 @app.post('/diagnostico/responder', tags=['Diagnostics'])
 def diagnostico_responder(data: dict):
     return procesar_diagnostico(data) 
+
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
