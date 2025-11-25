@@ -108,7 +108,7 @@ Future<void> backgroundCheck(Map<String, dynamic> data) async {
           '¡ALERTA! $title (${progressPercent.toStringAsFixed(1)}%) necesita ser revisado pronto.';
     } else if (progressPercent < 50.0) {
       notificationBody =
-          'AVISO: $title (${progressPercent.toStringAsFixed(1)}%) se acerca a la mitad de su vida útil. Planifica su mantenimiento.';
+          'AVISO: $title (${progressPercent.toStringAsFixed(1)}%) está menos de la mitad de su vida útil. Planifica su mantenimiento.';
     }
 
     if (notificationBody != null) {
